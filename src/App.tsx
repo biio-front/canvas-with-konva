@@ -18,6 +18,7 @@ function App() {
   const [canvasElements, setCanvasElements] = useState<CanvasElement[]>([]);
   const bgColor = useInput('#ffffff');
   const color = useInput('');
+  const fontSize = useInput('16px');
 
   const addElement = (newElement: CanvasElement) => {
     setCanvasElements([...canvasElements, newElement]);
@@ -28,7 +29,7 @@ function App() {
       <div className='container'>
         <div className='customizing-title'>
           <span>{mode === 'bg-color' && '카드 배경 색상'}</span>
-          <span>{selectedItem.className === 'text' && '텍스트'}</span>
+          <span>{mode === 'text' && '텍스트'}</span>
         </div>
 
         <div className='customizing-board'>
@@ -43,7 +44,7 @@ function App() {
             </div>
           )}
 
-          {selectedItem.className === 'text' && (
+          {mode === 'text' && (
             <div className='text'>
               <div className='content'>
                 <label htmlFor='color'>
@@ -65,6 +66,34 @@ function App() {
                     }}
                   />
                 </label>
+
+                <div className='content'>
+                  <label htmlFor='font-size'>
+                    <div>텍스트 크기</div>
+                    <select
+                      value={fontSize.value}
+                      onChange={(event) => {
+                        const { value: changedValue } = event.target;
+
+                        fontSize.onChange(event);
+
+                        const changedElements = changeElement({
+                          elements: canvasElements,
+                          selectedItem,
+                          changedValues: { fontSize: changedValue },
+                        });
+
+                        setCanvasElements(changedElements);
+                      }}
+                    >
+                      <option>12px</option>
+                      <option>14px</option>
+                      <option>16px</option>
+                      <option>18px</option>
+                      <option>20px</option>
+                    </select>
+                  </label>
+                </div>
               </div>
             </div>
           )}
@@ -81,6 +110,8 @@ function App() {
             className='text'
             type='button'
             onClick={() => {
+              setMode('text');
+
               const element = {
                 className: 'text',
                 id: canvasElements.length.toString(),
@@ -99,8 +130,6 @@ function App() {
         <div className='canvas' id='canvas' style={{ background: bgColor.value }}>
           {canvasElements.map((element) => {
             if (element.className === 'text') {
-              const isSelected = selectedItem.id === element.id;
-
               return (
                 <input
                   type='text added'
@@ -108,13 +137,16 @@ function App() {
                   key={element.id}
                   id={element.id || '0'}
                   style={{
-                    color: isSelected ? color.value : element.styles?.color || '000000',
+                    fontSize: element.styles?.fontSize || '16px',
+                    color: element.styles?.color || '000000',
                     left: element.styles?.posX || 0,
                     top: element.styles?.posY || 0,
                   }}
                   autoComplete='off'
                   onClick={() => {
+                    setMode('text');
                     color.setValue(element.styles?.color || '000000');
+                    fontSize.setValue(element.styles?.fontSize || '16px');
                     selectItem(element);
                   }}
                   onDragStart={() => {
