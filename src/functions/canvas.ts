@@ -12,15 +12,11 @@ export const getCanvasItemPosition = (event: React.DragEvent<HTMLInputElement>) 
   return { posX: posX - startX, posY: posY - startY };
 };
 
-export const changeElement = ({
-  elements,
-  selectedItem,
-  changedValues,
-}: {
-  elements: CanvasElement[];
-  selectedItem: CanvasElement;
-  changedValues: { [k in string]: string | number };
-}) => {
+export const changeElement = (
+  elements: CanvasElement[],
+  selectedItem: CanvasElement,
+  changedValues: { [k in string]: string | number },
+) => {
   const selectedIndex = Number(selectedItem.id);
   const changedSelectedElement = {
     ...selectedItem,

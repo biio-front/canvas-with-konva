@@ -1,28 +1,28 @@
 import { useState } from 'react';
+import { shallowEqual } from 'react-redux';
+
+import { addElement, modifyElement } from '../reducers/canvas';
+import { useAppDispatch, useAppSelector } from '../store';
 
 import useInput from '../hooks/useInput';
-import { changeElement, getCanvasItemPosition } from '../functions/canvas';
+import { getCanvasItemPosition } from '../functions/canvas';
 
 import { CanvasElement } from '../type/canvas';
-
 import '../styles/Canvas.scss';
 
 function Canvas() {
+  const dispatch = useAppDispatch();
+  const canvasElements = useAppSelector((state) => state.canvas.canvasElements, shallowEqual);
+
   const [mode, setMode] = useState<string>('');
   const [selectedItem, selectItem] = useState<CanvasElement>({
     className: '',
     id: '',
     styles: { posX: 20, posY: 20 },
   });
-
-  const [canvasElements, setCanvasElements] = useState<CanvasElement[]>([]);
   const bgColor = useInput('#ffffff');
   const color = useInput('');
   const fontSize = useInput('16px');
-
-  const addElement = (newElement: CanvasElement) => {
-    setCanvasElements([...canvasElements, newElement]);
-  };
 
   return (
     <div className='card-canvas'>
@@ -56,13 +56,9 @@ function Canvas() {
                       const { value: changedValue } = event.target;
                       color.onChange(event);
 
-                      const changedElements = changeElement({
-                        elements: canvasElements,
-                        selectedItem,
-                        changedValues: { color: changedValue },
-                      });
-
-                      setCanvasElements(changedElements);
+                      dispatch(
+                        modifyElement({ selectedItem, changedValues: { color: changedValue } }),
+                      );
                     }}
                   />
                 </label>
@@ -77,13 +73,12 @@ function Canvas() {
 
                         fontSize.onChange(event);
 
-                        const changedElements = changeElement({
-                          elements: canvasElements,
-                          selectedItem,
-                          changedValues: { fontSize: changedValue },
-                        });
-
-                        setCanvasElements(changedElements);
+                        dispatch(
+                          modifyElement({
+                            selectedItem,
+                            changedValues: { fontSize: changedValue },
+                          }),
+                        );
                       }}
                     >
                       <option>12px</option>
@@ -119,7 +114,7 @@ function Canvas() {
               };
 
               color.setValue('');
-              addElement(element);
+              dispatch(addElement(element));
               selectItem(element);
             }}
           >
@@ -156,12 +151,7 @@ function Canvas() {
                   onDragEnd={(event) => {
                     const { posX, posY } = getCanvasItemPosition(event);
 
-                    const changedElements = changeElement({
-                      elements: canvasElements,
-                      selectedItem,
-                      changedValues: { posX, posY },
-                    });
-                    setCanvasElements(changedElements);
+                    dispatch(modifyElement({ selectedItem, changedValues: { posX, posY } }));
                   }}
                   draggable
                 />
