@@ -1,0 +1,25 @@
+.adding-board {
+    display: flex;
+    align-items: center;
+  
+    width: 500px;
+    height: 60px;
+    padding: 10px;
+    border-radius: 20px;
+
+    & >button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    
+      width: 40px;
+      height: 40px;
+    
+      margin: 0 5px;
+      border: 1px solid #ffffff30;
+      border-radius: 50%;
+      background: none;
+      cursor: pointer;
+      color: #c4c4c4;
+    }
+}
