@@ -3,10 +3,14 @@ import { useAppDispatch } from '../../../store';
 
 import { Input } from '../../../hooks/useInput';
 
+type Props = {
+  color: Input;
+  fontSize: Input;
+  fontFamily: Input;
+  fontWeight: Input;
+};
 
-type Props = { selectedItem: CanvasElement; color: Input; fontSize: Input };
-
-function CustomizingText({ selectedItem, color, fontSize }: Props) {
+function CustomizingText({ color, fontSize, fontFamily, fontWeight }: Props) {
   const dispatch = useAppDispatch();
 
   return (
@@ -53,6 +57,47 @@ function CustomizingText({ selectedItem, color, fontSize }: Props) {
               </select>
             </label>
           </div>
+        </div>
+
+        <div className='content'>
+          <label htmlFor='font-family'>
+            <div>폰트</div>
+            <select
+              value={fontFamily.value}
+              onChange={(event) => {
+                const { value: changedValue } = event.target;
+
+                fontFamily.onChange(event);
+                dispatch(modifyElement({ fontFamily: changedValue }));
+                dispatch(modifySelectedItem({ fontFamily: changedValue }));
+              }}
+            >
+              <option>sans-serif</option>
+              <option className='Kanit'>Kanit</option>
+              <option className='Sansita-Swashed'>Sansita Swashed</option>
+              <option className='Ubuntu'>Ubuntu</option>
+            </select>
+          </label>
+        </div>
+
+        <div className='content'>
+          <label htmlFor='font-weight'>
+            <div>글씨 굵기</div>
+            <select
+              value={fontWeight.value}
+              onChange={(event) => {
+                const { value: changedValue } = event.target;
+
+                fontWeight.onChange(event);
+                dispatch(modifyElement({ fontWeight: changedValue }));
+                dispatch(modifySelectedItem({ fontWeight: changedValue }));
+              }}
+            >
+              <option>lighter</option>
+              <option>normal</option>
+              <option>bolder</option>
+            </select>
+          </label>
         </div>
       </div>
     </>

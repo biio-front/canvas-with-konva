@@ -28,6 +28,8 @@ function Canvas() {
   const bgColor = useInput('#ffffff');
   const color = useInput('');
   const fontSize = useInput('16px');
+  const fontFamily = useInput('sans-serif');
+  const fontWeight = useInput('normal');
 
   const resetValues = () => {
     color.setValue('');
@@ -40,7 +42,12 @@ function Canvas() {
         {mode === '' && <Customizing />}
         {mode === 'bg-color' && <CustomizingBgColor bgColor={bgColor} />}
         {mode === 'text' && (
-          <CustomizingText selectedItem={selectedItem} color={color} fontSize={fontSize} />
+          <CustomizingText
+            color={color}
+            fontSize={fontSize}
+            fontFamily={fontFamily}
+            fontWeight={fontWeight}
+          />
         )}
       </div>
 
@@ -52,6 +59,15 @@ function Canvas() {
             const isSelected = selectedItem.id === element.id;
 
             if (element.className === 'text') {
+              const onClick = () => {
+                setMode('text');
+                color.setValue(element.styles?.color || '000000');
+                fontSize.setValue(element.styles?.fontSize || '16px');
+                fontFamily.setValue(element.styles?.fontFamily || 'sans-serif');
+                fontWeight.setValue(element.styles?.fontWeight || 'normal');
+                dispatch(selectItem(element));
+              };
+
               return (
                 <input
                   type='text'
@@ -59,22 +75,16 @@ function Canvas() {
                   key={element.id}
                   id={element.id || '0'}
                   style={{
-                    fontSize: element.styles?.fontSize || '16px',
-                    color: element.styles?.color || '000000',
                     left: element.styles?.posX || 0,
                     top: element.styles?.posY || 0,
+                    color: element.styles?.color || '000000',
+                    fontWeight: element.styles?.fontWeight || 'normal',
+                    fontSize: element.styles?.fontSize || '16px',
+                    fontFamily: element.styles?.fontFamily || 'sans-serif',
                   }}
                   autoComplete='off'
-                  onClick={() => {
-                    setMode('text');
-                    color.setValue(element.styles?.color || '000000');
-                    fontSize.setValue(element.styles?.fontSize || '16px');
-                    selectItem(element);
-                  }}
-                  onDragStart={() => {
-                    color.setValue(element.styles?.color || '000000');
-                    selectItem(element);
-                  }}
+                  onClick={onClick}
+                  onDragStart={onClick}
                   onDragEnd={(event) => {
                     const { posX, posY } = getCanvasItemPosition(event);
 
