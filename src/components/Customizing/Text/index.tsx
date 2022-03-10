@@ -5,8 +5,6 @@ import { Input } from '../../../hooks/useInput';
 
 import { CanvasElement } from '../../../type/canvas';
 
-import '../index.scss';
-
 type Props = { selectedItem: CanvasElement; color: Input; fontSize: Input };
 
 function CustomizingText({ selectedItem, color, fontSize }: Props) {

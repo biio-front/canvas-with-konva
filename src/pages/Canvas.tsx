@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { shallowEqual } from 'react-redux';
 
+import Customizing from '../components/Customizing';
 import CustomizingText from '../components/Customizing/Text';
 import CustomizingBgColor from '../components/Customizing/BgColor';
 import AddingBoard from '../components/AddingBoard';
@@ -37,12 +38,7 @@ function Canvas() {
   return (
     <div className='card-canvas'>
       <div className='container'>
-        {mode === '' && (
-          <>
-            <div className='customizing-title' />
-            <div className='customizing-board' />
-          </>
-        )}
+        {mode === '' && <Customizing />}
         {mode === 'bg-color' && <CustomizingBgColor bgColor={bgColor} />}
         {mode === 'text' && (
           <CustomizingText selectedItem={selectedItem} color={color} fontSize={fontSize} />
