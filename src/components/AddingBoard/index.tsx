@@ -1,13 +1,13 @@
 import { shallowEqual } from 'react-redux';
 
-import { addElement } from '../../reducers/canvas';
+import { addElement, selectItem } from '../../reducers/canvas';
 import { useAppDispatch, useAppSelector } from '../../store';
 
 import './index.scss';
 
-type Props = { setMode: Function; selectItem: Function; resetValues: Function };
+type Props = { setMode: Function; resetValues: Function };
 
-function AddingBoard({ setMode, selectItem, resetValues }: Props) {
+function AddingBoard({ setMode, resetValues }: Props) {
   const dispatch = useAppDispatch();
   const canvasElements = useAppSelector((state) => state.canvas.canvasElements, shallowEqual);
 
@@ -31,7 +31,7 @@ function AddingBoard({ setMode, selectItem, resetValues }: Props) {
 
           resetValues();
           dispatch(addElement(element));
-          selectItem(element);
+          dispatch(selectItem(element));
         }}
       >
         <span className='material-icons'>text_fields</span>

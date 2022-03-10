@@ -1,9 +1,8 @@
-import { modifyElement } from '../../../reducers/canvas';
+import { modifyElement, modifySelectedItem } from '../../../reducers/canvas';
 import { useAppDispatch } from '../../../store';
 
 import { Input } from '../../../hooks/useInput';
 
-import { CanvasElement } from '../../../type/canvas';
 
 type Props = { selectedItem: CanvasElement; color: Input; fontSize: Input };
 
@@ -25,9 +24,10 @@ function CustomizingText({ selectedItem, color, fontSize }: Props) {
               value={color.value}
               onChange={(event) => {
                 const { value: changedValue } = event.target;
-                color.onChange(event);
 
-                dispatch(modifyElement({ selectedItem, changedValues: { color: changedValue } }));
+                color.onChange(event);
+                dispatch(modifyElement({ color: changedValue }));
+                dispatch(modifySelectedItem({ color: changedValue }));
               }}
             />
           </label>
@@ -40,14 +40,9 @@ function CustomizingText({ selectedItem, color, fontSize }: Props) {
                 onChange={(event) => {
                   const { value: changedValue } = event.target;
 
-                  fontSize.onChange(event);
-
-                  dispatch(
-                    modifyElement({
-                      selectedItem,
-                      changedValues: { fontSize: changedValue },
-                    }),
-                  );
+                  fontFamily.onChange(event);
+                  dispatch(modifyElement({ fontSize: changedValue }));
+                  dispatch(modifySelectedItem({ fontSize: changedValue }));
                 }}
               >
                 <option>12px</option>

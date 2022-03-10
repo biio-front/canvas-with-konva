@@ -6,5 +6,7 @@ export type CanvasElement = {
     posY?: number;
     color?: string;
     fontSize?: string;
+    fontFamily?: string;
+    fontWeight?: string;
   };
 };

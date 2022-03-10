@@ -6,26 +6,25 @@ import CustomizingText from '../components/Customizing/Text';
 import CustomizingBgColor from '../components/Customizing/BgColor';
 import AddingBoard from '../components/AddingBoard';
 
-import { modifyElement } from '../reducers/canvas';
+import { modifyElement, modifySelectedItem, selectItem } from '../reducers/canvas';
 import { useAppDispatch, useAppSelector } from '../store';
 
 import useInput from '../hooks/useInput';
 import { getCanvasItemPosition } from '../functions/canvas';
 
-import { CanvasElement } from '../type/canvas';
-
 import '../styles/Canvas.scss';
 
 function Canvas() {
   const dispatch = useAppDispatch();
-  const canvasElements = useAppSelector((state) => state.canvas.canvasElements, shallowEqual);
+  const { canvasElements, selectedItem } = useAppSelector(
+    (state) => ({
+      canvasElements: state.canvas.canvasElements,
+      selectedItem: state.canvas.selectedItem,
+    }),
+    shallowEqual,
+  );
 
   const [mode, setMode] = useState<string>('');
-  const [selectedItem, selectItem] = useState<CanvasElement>({
-    className: '',
-    id: '',
-    styles: { posX: 20, posY: 20 },
-  });
   const bgColor = useInput('#ffffff');
   const color = useInput('');
   const fontSize = useInput('16px');
@@ -46,15 +45,17 @@ function Canvas() {
       </div>
 
       <div className='container adding'>
-        <AddingBoard setMode={setMode} selectItem={selectItem} resetValues={resetValues} />
+        <AddingBoard setMode={setMode} resetValues={resetValues} />
 
         <div className='canvas' id='canvas' style={{ background: bgColor.value }}>
           {canvasElements.map((element) => {
+            const isSelected = selectedItem.id === element.id;
+
             if (element.className === 'text') {
               return (
                 <input
                   type='text'
-                  className='text added'
+                  className={`text ${isSelected ? 'selected' : ''}`}
                   key={element.id}
                   id={element.id || '0'}
                   style={{
@@ -77,15 +78,15 @@ function Canvas() {
                   onDragEnd={(event) => {
                     const { posX, posY } = getCanvasItemPosition(event);
 
-                    selectItem({ ...selectedItem, styles: { ...selectedItem.styles, posX, posY } });
-                    dispatch(modifyElement({ selectedItem, changedValues: { posX, posY } }));
+                    modifySelectedItem({ posX, posY });
+                    dispatch(modifyElement({ posX, posY }));
                   }}
                   draggable
                 />
               );
             }
 
-            return <div key={element.id} />;
+            return <div key={element.id} className={`${isSelected ? 'selected' : ''}`} />;
           })}
         </div>
       </div>
