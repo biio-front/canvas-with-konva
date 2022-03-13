@@ -10,10 +10,18 @@ type Props = { setMode: Function; resetValues: Function };
 function AddingBoard({ setMode, resetValues }: Props) {
   const dispatch = useAppDispatch();
   const canvasElements = useAppSelector((state) => state.canvas.canvasElements, shallowEqual);
+  const INITIAL_ITEM = { className: '', id: '', styles: { posX: 20, posY: 20 } };
 
   return (
     <div className='adding-board'>
-      <button className='paint' type='button' onClick={() => setMode('bg-color')}>
+      <button
+        className='paint'
+        type='button'
+        onClick={() => {
+          setMode('bg-color');
+          dispatch(selectItem(INITIAL_ITEM));
+        }}
+      >
         <span className='material-icons'>format_color_fill</span>
       </button>
 
