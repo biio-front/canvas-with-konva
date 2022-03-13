@@ -88,7 +88,7 @@ function Canvas() {
                   onDragEnd={(event) => {
                     const { posX, posY } = getCanvasItemPosition(event);
 
-                    modifySelectedItem({ posX, posY });
+                    dispatch(modifySelectedItem({ posX, posY }));
                     dispatch(modifyElement({ posX, posY }));
                   }}
                   draggable
