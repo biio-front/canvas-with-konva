@@ -27,7 +27,8 @@ const canvasSlice = createSlice({
       state.selectedItem = payload;
     },
     modifySelectedItem: (state, { payload }) => {
-      state.selectedItem = { ...state.selectedItem, ...payload };
+      const selectedItem = { ...state.selectedItem };
+      state.selectedItem = { ...selectedItem, styles: { ...selectedItem.styles, ...payload } };
     },
   },
 });
