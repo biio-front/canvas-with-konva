@@ -8,9 +8,10 @@ type Props = {
   fontSize: Input;
   fontFamily: Input;
   fontWeight: Input;
+  textAlign: Input;
 };
 
-function CustomizingText({ color, fontSize, fontFamily, fontWeight }: Props) {
+function CustomizingText({ color, fontSize, fontFamily, fontWeight, textAlign }: Props) {
   const dispatch = useAppDispatch();
 
   return (
@@ -96,6 +97,26 @@ function CustomizingText({ color, fontSize, fontFamily, fontWeight }: Props) {
               <option>lighter</option>
               <option>normal</option>
               <option>bolder</option>
+            </select>
+          </label>
+        </div>
+
+        <div className='content'>
+          <label htmlFor='font-weight'>
+            <div>텍스트 정렬</div>
+            <select
+              value={textAlign.value}
+              onChange={(event) => {
+                const { value: changedValue } = event.target;
+
+                textAlign.onChange(event);
+                dispatch(modifyElement({ textAlign: changedValue }));
+                dispatch(modifySelectedItem({ textAlign: changedValue }));
+              }}
+            >
+              <option>left</option>
+              <option>center</option>
+              <option>right</option>
             </select>
           </label>
         </div>

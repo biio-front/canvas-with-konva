@@ -8,5 +8,6 @@ export type CanvasElement = {
     fontSize?: string;
     fontFamily?: string;
     fontWeight?: string;
+    textAlign?: 'left' | 'center' | 'right';
   };
 };

@@ -30,6 +30,7 @@ function Canvas() {
   const fontSize = useInput('16px');
   const fontFamily = useInput('sans-serif');
   const fontWeight = useInput('normal');
+  const textAlign = useInput('left');
 
   const resetValues = () => {
     color.setValue('');
@@ -47,6 +48,7 @@ function Canvas() {
             fontSize={fontSize}
             fontFamily={fontFamily}
             fontWeight={fontWeight}
+            textAlign={textAlign}
           />
         )}
       </div>
@@ -81,6 +83,7 @@ function Canvas() {
                     fontWeight: element.styles?.fontWeight || 'normal',
                     fontSize: element.styles?.fontSize || '16px',
                     fontFamily: element.styles?.fontFamily || 'sans-serif',
+                    textAlign: element.styles?.textAlign || 'left',
                   }}
                   autoComplete='off'
                   onClick={onClick}
