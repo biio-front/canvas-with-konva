@@ -1,17 +1,5 @@
 import { CanvasElement } from '../type/canvas';
 
-export const getCanvasItemPosition = (event: React.DragEvent<HTMLInputElement>) => {
-  const canvasElement = document.querySelector('#canvas')?.getBoundingClientRect();
-
-  const startX = canvasElement?.left || 0;
-  const startY = canvasElement?.top || 0;
-
-  const posX = event.clientX;
-  const posY = event.clientY;
-
-  return { posX: posX - startX, posY: posY - startY };
-};
-
 export const changeElement = (
   elements: CanvasElement[],
   selectedItem: CanvasElement,
