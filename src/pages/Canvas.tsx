@@ -75,7 +75,7 @@ function Canvas() {
                   type='text'
                   className={`text ${isSelected ? 'selected' : ''}`}
                   key={element.id}
-                  id={element.id || '0'}
+                  id={element.id || 'item-0'}
                   style={{
                     left: element.styles?.posX || 0,
                     top: element.styles?.posY || 0,

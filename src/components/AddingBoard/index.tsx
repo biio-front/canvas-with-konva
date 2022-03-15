@@ -33,7 +33,7 @@ function AddingBoard({ setMode, resetValues }: Props) {
 
           const element = {
             className: 'text',
-            id: canvasElements.length.toString(),
+            id: `item-${canvasElements.length}`,
             styles: { posX: 20, posY: 20 },
           };
 

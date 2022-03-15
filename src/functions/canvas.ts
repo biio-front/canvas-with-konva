@@ -17,7 +17,7 @@ export const changeElement = (
   selectedItem: CanvasElement,
   changedValues: { [k in string]: string | number },
 ) => {
-  const selectedIndex = Number(selectedItem.id);
+  const selectedIndex = Number(selectedItem.id.split('-')[1]);
   const changedSelectedElement = {
     ...selectedItem,
     styles: {
