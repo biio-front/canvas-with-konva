@@ -1,13 +1,13 @@
 import { Provider } from 'react-redux';
 
-import Canvas from './pages/Canvas';
+import Playground from './pages/Playground';
 
 import store from './store';
 
 function App() {
   return (
     <Provider store={store}>
-      <Canvas />
+      <Playground />
     </Provider>
   );
 }

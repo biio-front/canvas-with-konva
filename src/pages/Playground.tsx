@@ -11,9 +11,9 @@ import { useAppDispatch, useAppSelector } from '../store';
 
 import useInput from '../hooks/useInput';
 
-import '../styles/Canvas.scss';
+import '../styles/Playground.scss';
 
-function Canvas() {
+function Playground() {
   const dispatch = useAppDispatch();
   const { background, canvasElements, selectedItem } = useAppSelector(
     (state) => ({
@@ -41,7 +41,7 @@ function Canvas() {
   };
 
   return (
-    <div className='card-canvas'>
+    <div className='playground'>
       <div className='container'>
         {mode === '' && <Customizing />}
         {mode === 'bg-color' && <CustomizingBgColor background={background} />}
@@ -126,4 +126,4 @@ function Canvas() {
   );
 }
 
-export default Canvas;
+export default Playground;
