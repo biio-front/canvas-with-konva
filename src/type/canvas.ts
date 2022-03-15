@@ -11,3 +11,13 @@ export type CanvasElement = {
     textAlign?: 'left' | 'center' | 'right';
   };
 };
+
+export type Background = {
+  color: string;
+  image?: string;
+};
+
+export type Canvas = {
+  background: Background;
+  items: CanvasElement[];
+};

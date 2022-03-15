@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { changeElement } from '../functions/canvas';
-import { CanvasElement } from '../type/canvas';
+import { CanvasElement, Canvas } from '../type/canvas';
 
 type State = {
-  canvasElements: CanvasElement[];
+  canvas: Canvas;
   selectedItem: CanvasElement;
 };
 
 const initialState = {
-  canvasElements: [],
+  canvas: { background: { color: '#ffffff' }, items: [] },
   selectedItem: { className: '', id: '', styles: { posX: 20, posY: 20 } },
 } as State;
 
@@ -16,22 +16,25 @@ const canvasSlice = createSlice({
   name: 'canvas',
   initialState,
   reducers: {
+    modifyBackground: (state, { payload }) => {
+      state.canvas.background = { ...state.canvas.background, ...payload };
+    },
     addElement: (state, { payload }) => {
-      state.canvasElements = [...state.canvasElements, payload];
+      state.canvas.items = [...state.canvas.items, payload];
     },
     modifyElement: (state, { payload }) => {
-      const changedElements = changeElement(state.canvasElements, state.selectedItem, payload);
-      state.canvasElements = changedElements;
+      const changedElements = changeElement(state.canvas.items, state.selectedItem, payload);
+      state.canvas.items = changedElements;
     },
     selectItem: (state, { payload }) => {
       state.selectedItem = payload;
     },
     modifySelectedItem: (state, { payload }) => {
-      const selectedItem = { ...state.selectedItem };
-      state.selectedItem = { ...selectedItem, styles: { ...selectedItem.styles, ...payload } };
+      state.selectedItem.styles = { ...state.selectedItem.styles, ...payload };
     },
   },
 });
 
-export const { addElement, modifyElement, selectItem, modifySelectedItem } = canvasSlice.actions;
+export const { modifyBackground, addElement, modifyElement, selectItem, modifySelectedItem } =
+  canvasSlice.actions;
 export default canvasSlice.reducer;

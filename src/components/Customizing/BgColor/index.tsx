@@ -1,10 +1,18 @@
-import { Input } from '../../../hooks/useInput';
+import { modifyBackground } from '../../../reducers/canvas';
+import { useAppDispatch } from '../../../store';
+
+import useInput from '../../../hooks/useInput';
+
+import { Background } from '../../../type/canvas';
 
 type Props = {
-  bgColor: Input;
+  background: Background;
 };
 
-function CustomizingBgColor({ bgColor }: Props) {
+function CustomizingBgColor({ background }: Props) {
+  const dispatch = useAppDispatch();
+  const bgColor = useInput(background.color);
+
   return (
     <>
       <div className='customizing-title'>
@@ -15,7 +23,14 @@ function CustomizingBgColor({ bgColor }: Props) {
         <div className='content'>
           <label htmlFor='color'>
             <div>배경 색상</div>
-            <input type='color' value={bgColor.value} onChange={bgColor.onChange} />
+            <input
+              type='color'
+              value={bgColor.value}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                bgColor.onChange(event);
+                dispatch(modifyBackground({ color: event.target.value }));
+              }}
+            />
           </label>
         </div>
       </div>

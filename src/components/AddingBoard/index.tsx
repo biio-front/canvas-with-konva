@@ -9,7 +9,7 @@ type Props = { setMode: Function; resetValues: Function };
 
 function AddingBoard({ setMode, resetValues }: Props) {
   const dispatch = useAppDispatch();
-  const canvasElements = useAppSelector((state) => state.canvas.canvasElements, shallowEqual);
+  const canvasElements = useAppSelector((state) => state.canvas.canvas.items, shallowEqual);
   const INITIAL_ITEM = { className: '', id: '', styles: { posX: 20, posY: 20 } };
 
   return (

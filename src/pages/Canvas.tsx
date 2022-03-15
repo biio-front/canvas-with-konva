@@ -16,16 +16,16 @@ import '../styles/Canvas.scss';
 
 function Canvas() {
   const dispatch = useAppDispatch();
-  const { canvasElements, selectedItem } = useAppSelector(
+  const { background, canvasElements, selectedItem } = useAppSelector(
     (state) => ({
-      canvasElements: state.canvas.canvasElements,
+      background: state.canvas.canvas.background,
+      canvasElements: state.canvas.canvas.items,
       selectedItem: state.canvas.selectedItem,
     }),
     shallowEqual,
   );
 
   const [mode, setMode] = useState<string>('');
-  const bgColor = useInput('#ffffff');
   const color = useInput('');
   const fontSize = useInput('16px');
   const fontFamily = useInput('sans-serif');
@@ -41,7 +41,7 @@ function Canvas() {
     <div className='card-canvas'>
       <div className='container'>
         {mode === '' && <Customizing />}
-        {mode === 'bg-color' && <CustomizingBgColor bgColor={bgColor} />}
+        {mode === 'bg-color' && <CustomizingBgColor background={background} />}
         {mode === 'text' && (
           <CustomizingText
             color={color}
@@ -56,7 +56,7 @@ function Canvas() {
       <div className='container adding'>
         <AddingBoard setMode={setMode} resetValues={resetValues} />
 
-        <div className='canvas' id='canvas' style={{ background: bgColor.value }}>
+        <div className='canvas' id='canvas' style={{ background: background.color }}>
           {canvasElements.map((element) => {
             const isSelected = selectedItem.id === element.id;
 
