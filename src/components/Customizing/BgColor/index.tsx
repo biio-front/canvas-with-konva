@@ -1,16 +1,13 @@
+import { shallowEqual } from 'react-redux';
 import { modifyBackground } from '../../../reducers/canvas';
-import { useAppDispatch } from '../../../store';
+import { useAppDispatch, useAppSelector } from '../../../store';
 
 import useInput from '../../../hooks/useInput';
 
-import { Background } from '../../../type/canvas';
-
-type Props = {
-  background: Background;
-};
-
-function CustomizingBgColor({ background }: Props) {
+function CustomizingBgColor() {
   const dispatch = useAppDispatch();
+  const background = useAppSelector((state) => state.canvas.canvas.background, shallowEqual);
+
   const bgColor = useInput(background.color);
 
   return (
