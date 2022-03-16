@@ -1,15 +1,13 @@
+export type Canvas = {
+  background: Background;
+  items: CanvasElement[];
+};
+
 export type CanvasElement = {
   className: string;
   id: string;
-  styles: {
-    posX: number;
-    posY: number;
-    color?: string;
-    fontSize?: string;
-    fontFamily?: string;
-    fontWeight?: string;
-    textAlign?: 'left' | 'center' | 'right';
-  };
+  styles: ElementStyle;
+  text?: string;
 };
 
 export type Background = {
@@ -17,7 +15,15 @@ export type Background = {
   image?: string;
 };
 
-export type Canvas = {
-  background: Background;
-  items: CanvasElement[];
+export type ElementStyle = {
+  posX: number;
+  posY: number;
+} & TextStyle;
+
+export type TextStyle = {
+  color?: string;
+  fontSize?: string;
+  fontFamily?: string;
+  fontWeight?: string;
+  textAlign?: 'left' | 'center' | 'right';
 };

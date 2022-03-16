@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { changeElement } from '../functions/canvas';
+import { changeElementStyle, changeElementText } from '../functions/canvas';
 import { CanvasElement, Canvas } from '../type/canvas';
 
 type State = {
@@ -23,7 +23,14 @@ const canvasSlice = createSlice({
       state.canvas.items = [...state.canvas.items, payload];
     },
     modifyElement: (state, { payload }) => {
-      const changedElements = changeElement(state.canvas.items, state.selectedItem, payload);
+      let changedElements = {} as CanvasElement[];
+
+      if (typeof payload === 'string') {
+        changedElements = changeElementText(state.canvas.items, state.selectedItem, payload);
+      } else {
+        changedElements = changeElementStyle(state.canvas.items, state.selectedItem, payload);
+      }
+
       state.canvas.items = changedElements;
     },
     selectItem: (state, { payload }) => {
@@ -32,9 +39,18 @@ const canvasSlice = createSlice({
     modifySelectedItem: (state, { payload }) => {
       state.selectedItem.styles = { ...state.selectedItem.styles, ...payload };
     },
+    modifySelectedItemText: (state, { payload }) => {
+      state.selectedItem.text = payload;
+    },
   },
 });
 
-export const { modifyBackground, addElement, modifyElement, selectItem, modifySelectedItem } =
-  canvasSlice.actions;
+export const {
+  modifyBackground,
+  addElement,
+  modifyElement,
+  selectItem,
+  modifySelectedItem,
+  modifySelectedItemText,
+} = canvasSlice.actions;
 export default canvasSlice.reducer;
