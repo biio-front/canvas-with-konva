@@ -18,6 +18,8 @@ export type Background = {
 export type ElementStyle = {
   posX: number;
   posY: number;
+  width: number;
+  height: number;
 } & TextStyle;
 
 export type TextStyle = {

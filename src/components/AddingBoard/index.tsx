@@ -34,7 +34,7 @@ function AddingBoard({ setMode }: Props) {
           const element = {
             className: 'text',
             id: `item-${canvasElements.length}`,
-            styles: { posX: 20, posY: 20 },
+            styles: { posX: 20, posY: 20, width: 100, height: 30 },
           };
 
           dispatch(addElement(element));
