@@ -4,5 +4,13 @@
     height: 100%;
     border: 0;
     background-color: #ffffff00;
+
+    resize: none;
+    overflow: visible;
+    
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar { 
+      display: none;
+    }
   }
 }

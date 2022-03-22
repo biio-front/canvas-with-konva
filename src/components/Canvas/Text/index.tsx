@@ -14,8 +14,7 @@ function CanvasText({ onClickText, elementId, styles, text }: Props) {
   const dispatch = useAppDispatch();
 
   return (
-    <input
-      type='textarea'
+    <textarea
       className='canvas-text'
       id={elementId}
       style={{
@@ -27,7 +26,7 @@ function CanvasText({ onClickText, elementId, styles, text }: Props) {
       }}
       autoComplete='off'
       value={text || ''}
-      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+      onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const { value } = event.target;
 
         dispatch(modifyElement(value));
