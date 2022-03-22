@@ -1,0 +1,111 @@
+.canvas {
+  width: 500px;
+  height: 70vh;
+  position: relative;
+
+  margin: 0 30px;
+  padding: 20px;
+  border-radius: 20px;
+
+  background: white;
+  overflow: hidden;
+
+  &-element {
+    position: absolute;
+
+    .element-border,
+    .element-corner {
+      display: none;
+    }
+    
+    &.selected {
+      .element-border{
+        position: absolute;
+        display: block;
+
+        background: #53fcff;
+      }
+
+      .element-corner {
+        position: absolute;
+        display: block;
+
+        width: 5px;;
+        height: 5px;
+        background: #53fcff;
+        border: 1px solid white;
+      }
+
+      .s, .n {
+        width: 100%;
+        height: 1px;
+
+        &:hover {
+          cursor: ns-resize;
+        }
+      }
+
+      .e, .w {
+        width: 1px;
+        height: 100%;
+        top: 0;
+
+        &:hover {
+          cursor: ew-resize;
+        }
+      }
+
+      .n {
+        top: -1px;
+      }
+
+      .s {
+        bottom: -1px;
+      }
+
+      .e {
+        right: -1px;
+      }
+
+      .w {
+        left: -1px;
+      }
+      
+      .nw {
+        top: -2.5px;
+        left: -2.5px;
+
+        &:hover {
+          cursor: nwse-resize
+        }
+      }
+
+      .ne {
+        top: -2.5px;
+        right: -2.5px;
+
+        &:hover {
+          cursor: nesw-resize
+        }
+      }
+
+      .sw {
+        bottom: -2.5px;
+        left: -2.5px;
+
+        &:hover {
+          cursor: nesw-resize
+        }
+      }
+      
+      .se {
+        bottom: -2.5px;
+        right: -2.5px;
+        
+        &:hover {
+          cursor: nwse-resize
+        }
+      }
+    }
+  }
+}

@@ -5,11 +5,11 @@ import { useAppDispatch, useAppSelector } from '../../store';
 
 import './index.scss';
 
-type Props = { setMode: Function; resetValues: Function };
+type Props = { setMode: Function };
 
-function AddingBoard({ setMode, resetValues }: Props) {
+function AddingBoard({ setMode }: Props) {
   const dispatch = useAppDispatch();
-  const canvasElements = useAppSelector((state) => state.canvas.canvasElements, shallowEqual);
+  const canvasElements = useAppSelector((state) => state.canvas.canvas.items, shallowEqual);
   const INITIAL_ITEM = { className: '', id: '', styles: { posX: 20, posY: 20 } };
 
   return (
@@ -33,11 +33,10 @@ function AddingBoard({ setMode, resetValues }: Props) {
 
           const element = {
             className: 'text',
-            id: canvasElements.length.toString(),
-            styles: { posX: 20, posY: 20 },
+            id: `item-${canvasElements.length}`,
+            styles: { posX: 20, posY: 20, width: 100, height: 30 },
           };
 
-          resetValues();
           dispatch(addElement(element));
           dispatch(selectItem(element));
         }}

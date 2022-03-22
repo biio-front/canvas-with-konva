@@ -1,10 +1,15 @@
-import { Input } from '../../../hooks/useInput';
+import { shallowEqual } from 'react-redux';
+import { modifyBackground } from '../../../reducers/canvas';
+import { useAppDispatch, useAppSelector } from '../../../store';
 
-type Props = {
-  bgColor: Input;
-};
+import useInput from '../../../hooks/useInput';
 
-function CustomizingBgColor({ bgColor }: Props) {
+function CustomizingBgColor() {
+  const dispatch = useAppDispatch();
+  const background = useAppSelector((state) => state.canvas.canvas.background, shallowEqual);
+
+  const bgColor = useInput(background.color);
+
   return (
     <>
       <div className='customizing-title'>
@@ -15,7 +20,14 @@ function CustomizingBgColor({ bgColor }: Props) {
         <div className='content'>
           <label htmlFor='color'>
             <div>배경 색상</div>
-            <input type='color' value={bgColor.value} onChange={bgColor.onChange} />
+            <input
+              type='color'
+              value={bgColor.value}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                bgColor.onChange(event);
+                dispatch(modifyBackground({ color: event.target.value }));
+              }}
+            />
           </label>
         </div>
       </div>
