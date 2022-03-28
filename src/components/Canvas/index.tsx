@@ -3,6 +3,7 @@ import { shallowEqual } from 'react-redux';
 import { modifyElement, modifySelectedItem, selectItem } from '../../reducers/canvas';
 
 import CanvasText from './Text';
+import CanvasRectangle from './Rectangle';
 
 import { useAppDispatch, useAppSelector } from '../../store';
 import { setColor, setFontFamily, setFontSize, setFontWeight } from '../../reducers/canvasCustom';
@@ -58,6 +59,14 @@ function Canvas({ setMode }: Props) {
           dispatch(setFontSize(element.styles.fontSize));
           dispatch(setFontFamily(element.styles.fontFamily));
           dispatch(setFontWeight(element.styles.fontWeight || 'normal'));
+          dispatch(selectItem(element));
+        };
+
+        const onClickRectangle = (event: React.MouseEvent | React.DragEvent) => {
+          onClick(event);
+
+          setMode('rectangle');
+          dispatch(setColor(element.styles.color));
           dispatch(selectItem(element));
         };
 
@@ -143,7 +152,13 @@ function Canvas({ setMode }: Props) {
               />
             )}
 
-            {element.className !== 'text' && <div key={element.id} />}
+            {element.className === 'rectangle' && (
+              <CanvasRectangle
+                elementId={element.id}
+                styles={element.styles}
+                onClickRectangle={onClickRectangle}
+              />
+            )}
 
             <div
               className='element-border n'

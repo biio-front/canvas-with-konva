@@ -12,6 +12,7 @@
 
   &-element {
     position: absolute;
+    box-sizing: border-box;
 
     .element-border,
     .element-corner {

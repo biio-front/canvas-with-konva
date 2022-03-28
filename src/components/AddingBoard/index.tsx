@@ -43,6 +43,34 @@ function AddingBoard({ setMode }: Props) {
       >
         <span className='material-icons'>text_fields</span>
       </button>
+
+      <button
+        className='rectangle'
+        type='button'
+        onClick={() => {
+          setMode('rectangle');
+
+          const element = {
+            className: 'rectangle',
+            id: `item-${canvasElements.length}`,
+            styles: {
+              posX: 20,
+              posY: 20,
+              width: 100,
+              height: 30,
+              color: '#888888',
+              borderWidth: 'none',
+              borderStyle: 'solid',
+              borderColor: '#000000',
+            },
+          };
+
+          dispatch(addElement(element));
+          dispatch(selectItem(element));
+        }}
+      >
+        <span className='material-icons'>rectangle</span>
+      </button>
     </div>
   );
 }

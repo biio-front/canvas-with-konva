@@ -20,7 +20,8 @@ export type ElementStyle = {
   posY: number;
   width: number;
   height: number;
-} & TextStyle;
+} & TextStyle &
+  RectangleStyle;
 
 export type TextStyle = {
   color?: string;
@@ -28,4 +29,11 @@ export type TextStyle = {
   fontFamily?: string;
   fontWeight?: string;
   textAlign?: 'left' | 'center' | 'right';
+};
+
+export type RectangleStyle = {
+  color?: string;
+  borderWidth?: string;
+  borderStyle?: string;
+  borderColor?: string;
 };
