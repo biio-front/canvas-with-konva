@@ -3,7 +3,7 @@ import { shallowEqual } from 'react-redux';
 import { modifyElement, modifySelectedItem, selectItem } from '../../reducers/canvas';
 
 import CanvasText from './Text';
-import CanvasRectangle from './Rectangle';
+import CanvasShape from './Shape';
 
 import { useAppDispatch, useAppSelector } from '../../store';
 import { setColor, setFontFamily, setFontSize, setFontWeight } from '../../reducers/canvasCustom';
@@ -62,10 +62,10 @@ function Canvas({ setMode }: Props) {
           dispatch(selectItem(element));
         };
 
-        const onClickRectangle = (event: React.MouseEvent | React.DragEvent) => {
+        const onClickShape = (event: React.MouseEvent | React.DragEvent) => {
           onClick(event);
 
-          setMode('rectangle');
+          setMode('shape');
           dispatch(setColor(element.styles.color));
           dispatch(selectItem(element));
         };
@@ -152,12 +152,8 @@ function Canvas({ setMode }: Props) {
               />
             )}
 
-            {element.className === 'rectangle' && (
-              <CanvasRectangle
-                elementId={element.id}
-                styles={element.styles}
-                onClickRectangle={onClickRectangle}
-              />
+            {(element.className === 'rectangle' || element.className === 'circle') && (
+              <CanvasShape element={element} onClickShape={onClickShape} />
             )}
 
             <div

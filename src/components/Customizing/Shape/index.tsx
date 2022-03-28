@@ -10,10 +10,11 @@ import {
 
 import { changeStyle } from '../../../functions/customizing';
 
-function CustomizingRectangle() {
+function CustomizingShape() {
   const dispatch = useAppDispatch();
-  const { color, borderWidth, borderColor, borderStyle } = useAppSelector(
+  const { className, color, borderWidth, borderColor, borderStyle } = useAppSelector(
     (state) => ({
+      className: state.canvas.selectedItem.className,
       color: state.canvasCustom.color,
       borderWidth: state.canvasCustom.borderWidth,
       borderStyle: state.canvasCustom.borderStyle,
@@ -25,7 +26,10 @@ function CustomizingRectangle() {
   return (
     <>
       <div className='customizing-title'>
-        <span>사각형</span>
+        <span>
+          {className === 'rectangle' && '사각형'}
+          {className === 'circle' && '원'}
+        </span>
       </div>
 
       <div className='customizing-board'>
@@ -44,7 +48,7 @@ function CustomizingRectangle() {
             value={borderWidth}
             onChange={(event) => changeStyle(event, dispatch, setBorderWidth, 'borderWidth')}
           >
-            <option>none</option>
+            <option>0px</option>
             <option>1px</option>
             <option>2px</option>
             <option>3px</option>
@@ -78,4 +82,4 @@ function CustomizingRectangle() {
   );
 }
 
-export default CustomizingRectangle;
+export default CustomizingShape;
