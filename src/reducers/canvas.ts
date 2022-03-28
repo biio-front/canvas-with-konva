@@ -16,6 +16,9 @@ const canvasSlice = createSlice({
   name: 'canvas',
   initialState,
   reducers: {
+    getCanvas: (state, { payload }) => {
+      state.canvas = payload;
+    },
     modifyBackground: (state, { payload }) => {
       state.canvas.background = { ...state.canvas.background, ...payload };
     },
@@ -46,6 +49,7 @@ const canvasSlice = createSlice({
 });
 
 export const {
+  getCanvas,
   modifyBackground,
   addElement,
   modifyElement,
