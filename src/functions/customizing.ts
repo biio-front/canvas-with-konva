@@ -2,7 +2,7 @@ import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { modifyElement, modifySelectedItem } from '../reducers/canvas';
 import { AppDispatch } from '../store';
 
-const useChangeStyle = (
+export const changeStyle = (
   event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   dispatch: AppDispatch,
   action: ActionCreatorWithPayload<any, string>,
@@ -14,5 +14,3 @@ const useChangeStyle = (
   dispatch(modifyElement({ [kind]: value }));
   dispatch(modifySelectedItem({ [kind]: value }));
 };
-
-export default useChangeStyle;

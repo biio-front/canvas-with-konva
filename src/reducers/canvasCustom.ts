@@ -7,6 +7,9 @@ const initialState = {
   fontFamily: 'sans-serif',
   fontWeight: 'normal',
   textAlign: 'left',
+  borderWidth: 'none',
+  borderStyle: 'none',
+  borderColor: 'none',
 } as ElementStyle;
 
 const canvasCustomSlice = createSlice({
@@ -28,9 +31,26 @@ const canvasCustomSlice = createSlice({
     setTextAlign: (state, { payload }) => {
       state.textAlign = payload;
     },
+    setBorderWidth: (state, { payload }) => {
+      state.borderWidth = payload;
+    },
+    setBorderColor: (state, { payload }) => {
+      state.borderColor = payload;
+    },
+    setBorderStyle: (state, { payload }) => {
+      state.borderStyle = payload;
+    },
   },
 });
 
-export const { setColor, setFontSize, setFontFamily, setFontWeight, setTextAlign } =
-  canvasCustomSlice.actions;
+export const {
+  setColor,
+  setFontSize,
+  setFontFamily,
+  setFontWeight,
+  setTextAlign,
+  setBorderWidth,
+  setBorderColor,
+  setBorderStyle,
+} = canvasCustomSlice.actions;
 export default canvasCustomSlice.reducer;

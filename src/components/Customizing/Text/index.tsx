@@ -9,7 +9,7 @@ import {
   setTextAlign,
 } from '../../../reducers/canvasCustom';
 
-import useChangeStyle from '../../../hooks/useChangeStyle';
+import { changeStyle } from '../../../functions/customizing';
 
 function CustomizingText() {
   const dispatch = useAppDispatch();
@@ -37,7 +37,7 @@ function CustomizingText() {
             <input
               type='color'
               value={color || '000000'}
-              onChange={(event) => useChangeStyle(event, dispatch, setColor, 'color')}
+              onChange={(event) => changeStyle(event, dispatch, setColor, 'color')}
             />
           </label>
 
@@ -46,7 +46,7 @@ function CustomizingText() {
               <div>텍스트 크기</div>
               <select
                 value={fontSize || '16px'}
-                onChange={(event) => useChangeStyle(event, dispatch, setFontSize, 'fontSize')}
+                onChange={(event) => changeStyle(event, dispatch, setFontSize, 'fontSize')}
               >
                 <option>10px</option>
                 <option>13px</option>
@@ -63,7 +63,7 @@ function CustomizingText() {
             <div>폰트</div>
             <select
               value={fontFamily || 'sans-serif'}
-              onChange={(event) => useChangeStyle(event, dispatch, setFontFamily, 'fontFamily')}
+              onChange={(event) => changeStyle(event, dispatch, setFontFamily, 'fontFamily')}
             >
               <option>sans-serif</option>
               <option className='Kanit'>Kanit</option>
@@ -78,7 +78,7 @@ function CustomizingText() {
             <div>글씨 굵기</div>
             <select
               value={fontWeight || 'normal'}
-              onChange={(event) => useChangeStyle(event, dispatch, setFontWeight, 'fontWeight')}
+              onChange={(event) => changeStyle(event, dispatch, setFontWeight, 'fontWeight')}
             >
               <option>lighter</option>
               <option>normal</option>
@@ -92,7 +92,7 @@ function CustomizingText() {
             <div>텍스트 정렬</div>
             <select
               value={textAlign || 'left'}
-              onChange={(event) => useChangeStyle(event, dispatch, setTextAlign, 'textAlign')}
+              onChange={(event) => changeStyle(event, dispatch, setTextAlign, 'textAlign')}
             >
               <option>left</option>
               <option>center</option>
