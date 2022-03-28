@@ -21,7 +21,7 @@ export type ElementStyle = {
   width: number;
   height: number;
 } & TextStyle &
-  RectangleStyle;
+  ShapeStyle;
 
 export type TextStyle = {
   color?: string;
@@ -31,7 +31,7 @@ export type TextStyle = {
   textAlign?: 'left' | 'center' | 'right';
 };
 
-export type RectangleStyle = {
+export type ShapeStyle = {
   color?: string;
   borderWidth?: string;
   borderStyle?: string;
