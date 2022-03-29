@@ -1,31 +1,48 @@
-import { modifyElement, modifySelectedItemText } from '../../../reducers/canvas';
+import { modifyElement, modifySelectedItemText, selectItem } from '../../../reducers/canvas';
+import {
+  setColor,
+  setFontFamily,
+  setFontSize,
+  setFontWeight,
+} from '../../../reducers/canvasCustom';
 import { useAppDispatch } from '../../../store';
-import { ElementStyle } from '../../../type/canvas';
+
+import { CanvasElement } from '../../../type/canvas';
+
 import './index.scss';
 
 type Props = {
-  onClickText: Function;
-  elementId: string;
-  styles: ElementStyle;
-  text: string;
+  onClick: Function;
+  setMode: Function;
+  element: CanvasElement;
 };
 
-function CanvasText({ onClickText, elementId, styles, text }: Props) {
+function CanvasText({ onClick, setMode, element }: Props) {
   const dispatch = useAppDispatch();
 
+  const onClickText = (event: React.MouseEvent | React.DragEvent) => {
+    onClick(event);
+
+    setMode('text');
+    dispatch(setColor(element.styles.color));
+    dispatch(setFontSize(element.styles.fontSize));
+    dispatch(setFontFamily(element.styles.fontFamily));
+    dispatch(setFontWeight(element.styles.fontWeight || 'normal'));
+    dispatch(selectItem(element));
+  };
   return (
     <textarea
       className='canvas-text'
-      id={elementId}
+      id={element.id}
       style={{
-        color: styles?.color || '000000',
-        fontWeight: styles?.fontWeight || 'normal',
-        fontSize: styles?.fontSize || '16px',
-        fontFamily: styles?.fontFamily || 'sans-serif',
-        textAlign: styles?.textAlign || 'left',
+        color: element.styles.color || '000000',
+        fontWeight: element.styles.fontWeight || 'normal',
+        fontSize: element.styles.fontSize || '16px',
+        fontFamily: element.styles.fontFamily || 'sans-serif',
+        textAlign: element.styles.textAlign || 'left',
       }}
       autoComplete='off'
-      value={text || ''}
+      value={element.text || ''}
       onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const { value } = event.target;
 

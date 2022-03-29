@@ -6,7 +6,6 @@ import CanvasText from './Text';
 import CanvasShape from './Shape';
 
 import { useAppDispatch, useAppSelector } from '../../store';
-import { setColor, setFontFamily, setFontSize, setFontWeight } from '../../reducers/canvasCustom';
 
 import './index.scss';
 
@@ -37,6 +36,11 @@ function Canvas({ setMode }: Props) {
           setStartY(event.clientY);
         };
 
+        const onDragStart = (event: React.DragEvent) => {
+          onClick(event);
+          dispatch(selectItem(element));
+        };
+
         const onDragEnd = (event: React.DragEvent) => {
           const prevPosX = element.styles.posX;
           const prevPosY = element.styles.posY;
@@ -49,25 +53,6 @@ function Canvas({ setMode }: Props) {
 
           dispatch(modifySelectedItem({ posX, posY }));
           dispatch(modifyElement({ posX, posY }));
-        };
-
-        const onClickText = (event: React.MouseEvent | React.DragEvent) => {
-          onClick(event);
-
-          setMode('text');
-          dispatch(setColor(element.styles.color));
-          dispatch(setFontSize(element.styles.fontSize));
-          dispatch(setFontFamily(element.styles.fontFamily));
-          dispatch(setFontWeight(element.styles.fontWeight || 'normal'));
-          dispatch(selectItem(element));
-        };
-
-        const onClickShape = (event: React.MouseEvent | React.DragEvent) => {
-          onClick(event);
-
-          setMode('shape');
-          dispatch(setColor(element.styles.color));
-          dispatch(selectItem(element));
         };
 
         const resize = (event: DragEvent, directions: string[], kind: 'drag' | 'dragend') => {
@@ -140,21 +125,16 @@ function Canvas({ setMode }: Props) {
               height: element.styles.height,
               zIndex: element.styles.zIndex,
             }}
-            onDragStart={onClickText}
+            onDragStart={onDragStart}
             onDragEnd={onDragEnd}
             draggable
           >
             {element.className === 'text' && (
-              <CanvasText
-                onClickText={onClickText}
-                elementId={element.id}
-                styles={element.styles}
-                text={element.text || ''}
-              />
+              <CanvasText onClick={onClick} setMode={setMode} element={element} />
             )}
 
             {(element.className === 'rectangle' || element.className === 'circle') && (
-              <CanvasShape element={element} onClickShape={onClickShape} />
+              <CanvasShape element={element} onClick={onClick} setMode={setMode} />
             )}
 
             <div

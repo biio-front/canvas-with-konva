@@ -1,14 +1,29 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import { selectItem } from '../../../reducers/canvas';
+import { setColor } from '../../../reducers/canvasCustom';
+import { useAppDispatch } from '../../../store';
+
 import { CanvasElement } from '../../../type/canvas';
 import './index.scss';
 
 type Props = {
-  onClickShape: Function;
+  onClick: Function;
+  setMode: Function;
   element: CanvasElement;
 };
 
-function CanvasShape({ element, onClickShape }: Props) {
+function CanvasShape({ element, onClick, setMode }: Props) {
+  const dispatch = useAppDispatch();
+
+  const onClickShape = (event: React.MouseEvent | React.DragEvent) => {
+    onClick(event);
+
+    setMode('shape');
+    dispatch(setColor(element.styles.color));
+    dispatch(selectItem(element));
+  };
+
   return (
     <div
       className={`canvas-${element.className}`}
