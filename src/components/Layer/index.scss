@@ -1,0 +1,48 @@
+.layer {
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &-title {
+      color: white;
+    }
+
+    button {
+      margin-left: 0.25rem;
+      padding: 0;
+      border: 0;
+
+      background: inherit;
+      color: white;
+    }
+  }
+
+  &-items {
+    width: 170px;
+    height: 60vh;
+    
+    margin: 0 30px;
+    padding: 20px;
+    border-radius: 20px;
+
+    background: #ffffff;
+
+    .layer-item {
+      padding: 0.25rem;
+      list-style: none;
+
+      display: flex;
+      align-items: center;
+
+      &.selected {
+        border: 1px solid #a4a4a4;
+        border-radius: 0.5rem;
+      }
+
+      .material-icons {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}
