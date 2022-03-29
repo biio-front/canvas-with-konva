@@ -9,17 +9,15 @@ import './index.scss';
 
 type Props = {
   onClick: Function;
-  setMode: Function;
   element: CanvasElement;
 };
 
-function CanvasShape({ element, onClick, setMode }: Props) {
+function CanvasShape({ element, onClick }: Props) {
   const dispatch = useAppDispatch();
 
   const onClickShape = (event: React.MouseEvent | React.DragEvent) => {
     onClick(event);
 
-    setMode('shape');
     dispatch(setColor(element.styles.color));
     dispatch(selectItem(element));
   };

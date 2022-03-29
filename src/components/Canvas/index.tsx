@@ -9,9 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../store';
 
 import './index.scss';
 
-type Props = { setMode: Function };
-
-function Canvas({ setMode }: Props) {
+function Canvas() {
   const dispatch = useAppDispatch();
 
   const { background, canvasElements, selectedItem } = useAppSelector(
@@ -129,12 +127,10 @@ function Canvas({ setMode }: Props) {
             onDragEnd={onDragEnd}
             draggable
           >
-            {element.className === 'text' && (
-              <CanvasText onClick={onClick} setMode={setMode} element={element} />
-            )}
+            {element.className === 'text' && <CanvasText onClick={onClick} element={element} />}
 
             {(element.className === 'rectangle' || element.className === 'circle') && (
-              <CanvasShape element={element} onClick={onClick} setMode={setMode} />
+              <CanvasShape element={element} onClick={onClick} />
             )}
 
             <div

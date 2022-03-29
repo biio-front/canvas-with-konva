@@ -13,17 +13,15 @@ import './index.scss';
 
 type Props = {
   onClick: Function;
-  setMode: Function;
   element: CanvasElement;
 };
 
-function CanvasText({ onClick, setMode, element }: Props) {
+function CanvasText({ onClick, element }: Props) {
   const dispatch = useAppDispatch();
 
   const onClickText = (event: React.MouseEvent | React.DragEvent) => {
     onClick(event);
 
-    setMode('text');
     dispatch(setColor(element.styles.color));
     dispatch(setFontSize(element.styles.fontSize));
     dispatch(setFontFamily(element.styles.fontFamily));

@@ -10,6 +10,7 @@ type State = {
 const initialState = {
   canvas: { background: { color: '#ffffff' }, items: [] },
   selectedItem: {
+    type: '',
     className: '',
     id: '',
     styles: { posX: 20, posY: 20, width: 100, height: 30, zIndex: 0 },

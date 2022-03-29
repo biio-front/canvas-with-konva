@@ -4,6 +4,7 @@ export type Canvas = {
 };
 
 export type CanvasElement = {
+  type: string;
   className: string;
   id: string;
   styles: ElementStyle;
