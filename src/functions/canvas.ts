@@ -36,7 +36,7 @@ export const changeElement = (
   selectedItem: CanvasElement,
   changedSelectedElement: CanvasElement,
 ) => {
-  const selectedIndex = Number(selectedItem.id.split('-')[1]);
+  const selectedIndex = selectedItem.styles.zIndex;
   const changedElements = [...elements];
   changedElements.splice(selectedIndex, 1, changedSelectedElement);
 
