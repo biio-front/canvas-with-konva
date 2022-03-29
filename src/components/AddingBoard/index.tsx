@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef } from 'react';
 import { shallowEqual } from 'react-redux';
 
 import { addElement, modifyBackground, selectItem } from '../../reducers/canvas';
@@ -23,7 +23,15 @@ function AddingBoard() {
     styles: { posX: 20, posY: 20, zIndex: 0 },
   };
 
-  const [toggle, setToggle] = useState(false);
+  const bgColorRef = useRef<HTMLInputElement>(null);
+
+  const onClickHiddenInput = (inputRef: React.RefObject<HTMLInputElement>) => {
+    if (!inputRef?.current) {
+      return;
+    }
+
+    inputRef.current.click();
+  };
 
   return (
     <div className='adding-board'>
@@ -33,23 +41,21 @@ function AddingBoard() {
           type='button'
           onClick={() => {
             dispatch(selectItem(INITIAL_ITEM));
-            setToggle((prev) => !prev);
+            onClickHiddenInput(bgColorRef);
           }}
         >
           <span className='material-icons'>format_color_fill</span>
         </button>
-
-        {toggle && (
-          <input
-            className='bg-color-input'
-            type='color'
-            value={background.color}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setToggle(false);
-              dispatch(modifyBackground({ color: event.target.value }));
-            }}
-          />
-        )}
+        <input
+          className='bg-color-input'
+          type='color'
+          value={background.color}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            dispatch(modifyBackground({ color: event.target.value }));
+          }}
+          hidden
+          ref={bgColorRef}
+        />
       </div>
 
       <button
