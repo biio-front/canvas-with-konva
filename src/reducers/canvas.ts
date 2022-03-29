@@ -9,7 +9,11 @@ type State = {
 
 const initialState = {
   canvas: { background: { color: '#ffffff' }, items: [] },
-  selectedItem: { className: '', id: '', styles: { posX: 20, posY: 20, width: 100, height: 30 } },
+  selectedItem: {
+    className: '',
+    id: '',
+    styles: { posX: 20, posY: 20, width: 100, height: 30, zIndex: 0 },
+  },
 } as State;
 
 const canvasSlice = createSlice({

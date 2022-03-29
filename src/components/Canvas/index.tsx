@@ -138,6 +138,7 @@ function Canvas({ setMode }: Props) {
               top: element.styles.posY,
               width: element.styles.width,
               height: element.styles.height,
+              zIndex: element.styles.zIndex,
             }}
             onDragStart={onClickText}
             onDragEnd={onDragEnd}

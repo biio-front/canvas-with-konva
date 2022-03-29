@@ -20,6 +20,7 @@ export type ElementStyle = {
   posY: number;
   width: number;
   height: number;
+  zIndex: number;
 } & TextStyle &
   ShapeStyle;
 
