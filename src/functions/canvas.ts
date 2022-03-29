@@ -36,9 +36,33 @@ export const changeElement = (
   selectedItem: CanvasElement,
   changedSelectedElement: CanvasElement,
 ) => {
-  const selectedIndex = Number(selectedItem.id.split('-')[1]);
+  const selectedIndex = selectedItem.styles.zIndex;
   const changedElements = [...elements];
   changedElements.splice(selectedIndex, 1, changedSelectedElement);
 
   return changedElements;
+};
+
+export const changeElementOrder = (
+  selectedIndex: number,
+  canvasItems: CanvasElement[],
+  selectedItem: CanvasElement,
+  direction: 'up' | 'down',
+): [CanvasElement[], CanvasElement] => {
+  const changedCanvasItems = [...canvasItems];
+  const switchedIndex = selectedIndex + (direction === 'up' ? 1 : -1);
+
+  const changedSelectedItem = {
+    ...selectedItem,
+    styles: { ...selectedItem.styles, zIndex: switchedIndex },
+  };
+  const changedSwitchedItem = {
+    ...changedCanvasItems[switchedIndex],
+    styles: { ...changedCanvasItems[switchedIndex].styles, zIndex: selectedIndex },
+  };
+
+  changedCanvasItems.splice(switchedIndex, 1, changedSelectedItem);
+  changedCanvasItems.splice(selectedIndex, 1, changedSwitchedItem);
+
+  return [changedCanvasItems, changedSelectedItem];
 };

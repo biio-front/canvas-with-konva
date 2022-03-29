@@ -1,14 +1,24 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import { selectItem } from '../../../reducers/canvas';
+import { useAppDispatch } from '../../../store';
+
 import { CanvasElement } from '../../../type/canvas';
 import './index.scss';
 
 type Props = {
-  onClickShape: Function;
+  onClick: Function;
   element: CanvasElement;
 };
 
-function CanvasShape({ element, onClickShape }: Props) {
+function CanvasShape({ element, onClick }: Props) {
+  const dispatch = useAppDispatch();
+
+  const onClickShape = (event: React.MouseEvent | React.DragEvent) => {
+    onClick(event);
+    dispatch(selectItem(element));
+  };
+
   return (
     <div
       className={`canvas-${element.className}`}

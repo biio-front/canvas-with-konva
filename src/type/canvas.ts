@@ -4,6 +4,7 @@ export type Canvas = {
 };
 
 export type CanvasElement = {
+  type: string;
   className: string;
   id: string;
   styles: ElementStyle;
@@ -20,8 +21,9 @@ export type ElementStyle = {
   posY: number;
   width: number;
   height: number;
+  zIndex: number;
 } & TextStyle &
-  RectangleStyle;
+  ShapeStyle;
 
 export type TextStyle = {
   color?: string;
@@ -31,7 +33,7 @@ export type TextStyle = {
   textAlign?: 'left' | 'center' | 'right';
 };
 
-export type RectangleStyle = {
+export type ShapeStyle = {
   color?: string;
   borderWidth?: string;
   borderStyle?: string;

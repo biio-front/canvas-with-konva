@@ -1,25 +1,17 @@
 import { shallowEqual } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '../../../store';
 
-import {
-  setColor,
-  setFontFamily,
-  setFontSize,
-  setFontWeight,
-  setTextAlign,
-} from '../../../reducers/canvasCustom';
-
 import { changeStyle } from '../../../functions/customizing';
 
 function CustomizingText() {
   const dispatch = useAppDispatch();
   const { color, fontSize, fontFamily, fontWeight, textAlign } = useAppSelector(
     (state) => ({
-      color: state.canvasCustom.color,
-      fontSize: state.canvasCustom.fontSize,
-      fontFamily: state.canvasCustom.fontFamily,
-      fontWeight: state.canvasCustom.fontWeight,
-      textAlign: state.canvasCustom.textAlign,
+      color: state.canvas.selectedItem.styles.color,
+      fontSize: state.canvas.selectedItem.styles.fontSize,
+      fontFamily: state.canvas.selectedItem.styles.fontFamily,
+      fontWeight: state.canvas.selectedItem.styles.fontWeight,
+      textAlign: state.canvas.selectedItem.styles.textAlign,
     }),
     shallowEqual,
   );
@@ -37,7 +29,7 @@ function CustomizingText() {
             <input
               type='color'
               value={color || '000000'}
-              onChange={(event) => changeStyle(event, dispatch, setColor, 'color')}
+              onChange={(event) => changeStyle(event, dispatch, 'color')}
             />
           </label>
 
@@ -46,7 +38,7 @@ function CustomizingText() {
               <div>텍스트 크기</div>
               <select
                 value={fontSize || '16px'}
-                onChange={(event) => changeStyle(event, dispatch, setFontSize, 'fontSize')}
+                onChange={(event) => changeStyle(event, dispatch, 'fontSize')}
               >
                 <option>10px</option>
                 <option>13px</option>
@@ -63,7 +55,7 @@ function CustomizingText() {
             <div>폰트</div>
             <select
               value={fontFamily || 'sans-serif'}
-              onChange={(event) => changeStyle(event, dispatch, setFontFamily, 'fontFamily')}
+              onChange={(event) => changeStyle(event, dispatch, 'fontFamily')}
             >
               <option>sans-serif</option>
               <option className='Kanit'>Kanit</option>
@@ -78,7 +70,7 @@ function CustomizingText() {
             <div>글씨 굵기</div>
             <select
               value={fontWeight || 'normal'}
-              onChange={(event) => changeStyle(event, dispatch, setFontWeight, 'fontWeight')}
+              onChange={(event) => changeStyle(event, dispatch, 'fontWeight')}
             >
               <option>lighter</option>
               <option>normal</option>
@@ -92,7 +84,7 @@ function CustomizingText() {
             <div>텍스트 정렬</div>
             <select
               value={textAlign || 'left'}
-              onChange={(event) => changeStyle(event, dispatch, setTextAlign, 'textAlign')}
+              onChange={(event) => changeStyle(event, dispatch, 'textAlign')}
             >
               <option>left</option>
               <option>center</option>

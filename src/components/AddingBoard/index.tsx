@@ -1,40 +1,66 @@
+import { useState } from 'react';
 import { shallowEqual } from 'react-redux';
 
-import { addElement, selectItem } from '../../reducers/canvas';
+import { addElement, modifyBackground, selectItem } from '../../reducers/canvas';
 import { useAppDispatch, useAppSelector } from '../../store';
 
 import './index.scss';
 
-type Props = { setMode: Function };
-
-function AddingBoard({ setMode }: Props) {
+function AddingBoard() {
   const dispatch = useAppDispatch();
-  const canvasElements = useAppSelector((state) => state.canvas.canvas.items, shallowEqual);
-  const INITIAL_ITEM = { className: '', id: '', styles: { posX: 20, posY: 20 } };
+  const { canvasElements, background } = useAppSelector(
+    (state) => ({
+      canvasElements: state.canvas.canvas.items,
+      background: state.canvas.canvas.background,
+    }),
+    shallowEqual,
+  );
+
+  const INITIAL_ITEM = {
+    type: '',
+    className: '',
+    id: '',
+    styles: { posX: 20, posY: 20, zIndex: 0 },
+  };
+
+  const [toggle, setToggle] = useState(false);
 
   return (
     <div className='adding-board'>
-      <button
-        className='paint'
-        type='button'
-        onClick={() => {
-          setMode('bg-color');
-          dispatch(selectItem(INITIAL_ITEM));
-        }}
-      >
-        <span className='material-icons'>format_color_fill</span>
-      </button>
+      <div className='bg-color-button'>
+        <button
+          className='paint'
+          type='button'
+          onClick={() => {
+            dispatch(selectItem(INITIAL_ITEM));
+            setToggle((prev) => !prev);
+          }}
+        >
+          <span className='material-icons'>format_color_fill</span>
+        </button>
+
+        {toggle && (
+          <input
+            className='bg-color-input'
+            type='color'
+            value={background.color}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setToggle(false);
+              dispatch(modifyBackground({ color: event.target.value }));
+            }}
+          />
+        )}
+      </div>
 
       <button
         className='text'
         type='button'
         onClick={() => {
-          setMode('text');
-
           const element = {
+            type: 'text',
             className: 'text',
             id: `item-${canvasElements.length}`,
-            styles: { posX: 20, posY: 20, width: 100, height: 30 },
+            styles: { posX: 20, posY: 20, width: 100, height: 30, zIndex: canvasElements.length },
           };
 
           dispatch(addElement(element));
@@ -48,9 +74,8 @@ function AddingBoard({ setMode }: Props) {
         className='rectangle'
         type='button'
         onClick={() => {
-          setMode('shape');
-
           const element = {
+            type: 'shape',
             className: 'rectangle',
             id: `item-${canvasElements.length}`,
             styles: {
@@ -58,6 +83,7 @@ function AddingBoard({ setMode }: Props) {
               posY: 20,
               width: 100,
               height: 100,
+              zIndex: canvasElements.length,
               color: '#888888',
               borderWidth: 'none',
               borderStyle: 'solid',
@@ -76,9 +102,8 @@ function AddingBoard({ setMode }: Props) {
         className='circle'
         type='button'
         onClick={() => {
-          setMode('shape');
-
           const element = {
+            type: 'shape',
             className: 'circle',
             id: `item-${canvasElements.length}`,
             styles: {
@@ -86,6 +111,7 @@ function AddingBoard({ setMode }: Props) {
               posY: 20,
               width: 100,
               height: 100,
+              zIndex: canvasElements.length,
               color: '#888888',
               borderWidth: '0',
               borderStyle: 'solid',

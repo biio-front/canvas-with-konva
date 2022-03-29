@@ -1,13 +1,6 @@
 import { shallowEqual } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '../../../store';
 
-import {
-  setBorderColor,
-  setBorderStyle,
-  setBorderWidth,
-  setColor,
-} from '../../../reducers/canvasCustom';
-
 import { changeStyle } from '../../../functions/customizing';
 
 function CustomizingShape() {
@@ -15,10 +8,10 @@ function CustomizingShape() {
   const { className, color, borderWidth, borderColor, borderStyle } = useAppSelector(
     (state) => ({
       className: state.canvas.selectedItem.className,
-      color: state.canvasCustom.color,
-      borderWidth: state.canvasCustom.borderWidth,
-      borderStyle: state.canvasCustom.borderStyle,
-      borderColor: state.canvasCustom.borderColor,
+      color: state.canvas.selectedItem.styles.color,
+      borderWidth: state.canvas.selectedItem.styles.borderWidth,
+      borderStyle: state.canvas.selectedItem.styles.borderStyle,
+      borderColor: state.canvas.selectedItem.styles.borderColor,
     }),
     shallowEqual,
   );
@@ -38,7 +31,7 @@ function CustomizingShape() {
           <input
             type='color'
             value={color}
-            onChange={(event) => changeStyle(event, dispatch, setColor, 'color')}
+            onChange={(event) => changeStyle(event, dispatch, 'color')}
           />
         </label>
 
@@ -46,7 +39,7 @@ function CustomizingShape() {
           <div>외곽선</div>
           <select
             value={borderWidth}
-            onChange={(event) => changeStyle(event, dispatch, setBorderWidth, 'borderWidth')}
+            onChange={(event) => changeStyle(event, dispatch, 'borderWidth')}
           >
             <option>0px</option>
             <option>1px</option>
@@ -62,7 +55,7 @@ function CustomizingShape() {
           <input
             type='color'
             value={borderColor}
-            onChange={(event) => changeStyle(event, dispatch, setBorderColor, 'borderColor')}
+            onChange={(event) => changeStyle(event, dispatch, 'borderColor')}
           />
         </label>
 
@@ -70,7 +63,7 @@ function CustomizingShape() {
           <div>외곽선 종류</div>
           <select
             value={borderStyle}
-            onChange={(event) => changeStyle(event, dispatch, setBorderStyle, 'borderStyle')}
+            onChange={(event) => changeStyle(event, dispatch, 'borderStyle')}
           >
             <option>solid</option>
             <option>dashed</option>
