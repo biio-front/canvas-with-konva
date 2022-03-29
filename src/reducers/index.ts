@@ -1,8 +1,7 @@
 import { combineReducers } from 'redux';
 import canvas from './canvas';
-import canvasCustom from './canvasCustom';
 
-const reducers = combineReducers({ canvas, canvasCustom });
+const reducers = combineReducers({ canvas });
 
 export type RootState = ReturnType<typeof reducers>;
 export default reducers;

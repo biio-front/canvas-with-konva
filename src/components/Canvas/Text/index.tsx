@@ -1,10 +1,4 @@
 import { modifyElement, modifySelectedItemText, selectItem } from '../../../reducers/canvas';
-import {
-  setColor,
-  setFontFamily,
-  setFontSize,
-  setFontWeight,
-} from '../../../reducers/canvasCustom';
 import { useAppDispatch } from '../../../store';
 
 import { CanvasElement } from '../../../type/canvas';
@@ -21,11 +15,6 @@ function CanvasText({ onClick, element }: Props) {
 
   const onClickText = (event: React.MouseEvent | React.DragEvent) => {
     onClick(event);
-
-    dispatch(setColor(element.styles.color));
-    dispatch(setFontSize(element.styles.fontSize));
-    dispatch(setFontFamily(element.styles.fontFamily));
-    dispatch(setFontWeight(element.styles.fontWeight || 'normal'));
     dispatch(selectItem(element));
   };
   return (
