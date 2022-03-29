@@ -7,6 +7,7 @@ import CustomizingBgColor from '../components/Customizing/BgColor';
 import CustomizingShape from '../components/Customizing/Shape';
 import AddingBoard from '../components/AddingBoard';
 import Canvas from '../components/Canvas';
+import Layer from '../components/Layer';
 
 import { getCanvas } from '../reducers/canvas';
 import { useAppDispatch, useAppSelector } from '../store';
@@ -44,9 +45,14 @@ function Playground() {
       <div className='container adding'>
         <AddingBoard setMode={setMode} />
         <Canvas setMode={setMode} />
-        <button type='button' onClick={onSave}>
+      </div>
+
+      <div className='container'>
+        <button type='button' onClick={onSave} className='save-button'>
           저장하기
         </button>
+
+        <Layer />
       </div>
     </div>
   );
