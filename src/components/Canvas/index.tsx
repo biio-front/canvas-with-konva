@@ -8,6 +8,7 @@ import CanvasShape from './Shape';
 import { useAppDispatch, useAppSelector } from '../../store';
 
 import './index.scss';
+import CanvasImage from './Image';
 
 function Canvas() {
   const dispatch = useAppDispatch();
@@ -127,11 +128,11 @@ function Canvas() {
             onDragEnd={onDragEnd}
             draggable
           >
-            {element.className === 'text' && <CanvasText onClick={onClick} element={element} />}
+            {element.type === 'text' && <CanvasText onClick={onClick} element={element} />}
 
-            {(element.className === 'rectangle' || element.className === 'circle') && (
-              <CanvasShape element={element} onClick={onClick} />
-            )}
+            {element.type === 'shape' && <CanvasShape element={element} onClick={onClick} />}
+
+            {element.type === 'image' && <CanvasImage element={element} onClick={onClick} />}
 
             <div
               className='element-border n'
