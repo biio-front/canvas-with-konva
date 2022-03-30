@@ -18,13 +18,6 @@ function AddingBoard() {
     shallowEqual,
   );
 
-  const INITIAL_ITEM = {
-    type: '',
-    className: '',
-    id: '',
-    styles: { posX: 20, posY: 20, zIndex: 0 },
-  };
-
   const { onChange } = useImageInput('');
 
   const bgColorRef = useRef<HTMLInputElement>(null);
@@ -45,14 +38,7 @@ function AddingBoard() {
     <div className='adding-board'>
       <div className='adding-buttons'>
         <div className='bg-color-button'>
-          <button
-            className='paint'
-            type='button'
-            onClick={() => {
-              dispatch(selectItem(INITIAL_ITEM));
-              onClickHiddenInput(bgColorRef);
-            }}
-          >
+          <button className='paint' type='button' onClick={() => onClickHiddenInput(bgColorRef)}>
             <span className='material-icons'>format_color_fill</span>
           </button>
           <input
