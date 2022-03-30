@@ -57,7 +57,6 @@ function AddingBoard() {
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             dispatch(modifyBackground({ color: event.target.value }));
           }}
-          hidden
           ref={bgColorRef}
         />
       </div>
