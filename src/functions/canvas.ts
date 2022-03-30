@@ -31,6 +31,20 @@ export const changeElementText = (
   return changedElements;
 };
 
+export const changeElementImage = (
+  elements: CanvasElement[],
+  selectedItem: CanvasElement,
+  changedImage: { src: string; alt: string },
+) => {
+  const changedSelectedElement = {
+    ...selectedItem,
+    image: changedImage,
+  };
+
+  const changedElements = changeElement(elements, selectedItem, changedSelectedElement);
+  return changedElements;
+};
+
 export const changeElement = (
   elements: CanvasElement[],
   selectedItem: CanvasElement,

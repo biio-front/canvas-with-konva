@@ -33,7 +33,7 @@ function CanvasText({ onClick, element }: Props) {
       onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const { value } = event.target;
 
-        dispatch(modifyElement(value));
+        dispatch(modifyElement({ type: 'text', changedValues: value }));
         dispatch(modifySelectedItemText(value));
       }}
       onClick={(event) => onClickText(event)}

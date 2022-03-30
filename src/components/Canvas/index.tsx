@@ -51,7 +51,7 @@ function Canvas() {
           const posY = prevPosY + moveY;
 
           dispatch(modifySelectedItem({ posX, posY }));
-          dispatch(modifyElement({ posX, posY }));
+          dispatch(modifyElement({ type: 'style', changedValues: { posX, posY } }));
         };
 
         const resize = (event: DragEvent, directions: string[], kind: 'drag' | 'dragend') => {
@@ -72,7 +72,12 @@ function Canvas() {
             selectedElement.style.top = `${newPosY}px`;
 
             if (kind === 'dragend') {
-              dispatch(modifyElement({ posY: newPosY, height: newHeight }));
+              dispatch(
+                modifyElement({
+                  type: 'style',
+                  changedValues: { posY: newPosY, height: newHeight },
+                }),
+              );
               dispatch(modifySelectedItem({ posY: newPosY, height: newHeight }));
             }
           }
@@ -85,7 +90,9 @@ function Canvas() {
             selectedElement.style.left = `${newPosX}px`;
 
             if (kind === 'dragend') {
-              dispatch(modifyElement({ posX: newPosX, width: newWidth }));
+              dispatch(
+                modifyElement({ type: 'style', changedValues: { posX: newPosX, width: newWidth } }),
+              );
               dispatch(modifySelectedItem({ posX: newPosX, width: newWidth }));
             }
           }
@@ -96,7 +103,7 @@ function Canvas() {
             selectedElement.style.width = `${newWidth}px`;
 
             if (kind === 'dragend') {
-              dispatch(modifyElement({ width: newWidth }));
+              dispatch(modifyElement({ type: 'style', changedValues: { width: newWidth } }));
               dispatch(modifySelectedItem({ width: newWidth }));
             }
           }
@@ -107,7 +114,7 @@ function Canvas() {
             selectedElement.style.height = `${newHeight}px`;
 
             if (kind === 'dragend') {
-              dispatch(modifyElement({ height: newHeight }));
+              dispatch(modifyElement({ type: 'style', changedValues: { height: newHeight } }));
               dispatch(modifySelectedItem({ height: newHeight }));
             }
           }
