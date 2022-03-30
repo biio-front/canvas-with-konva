@@ -1,11 +1,16 @@
 .adding-board {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   width: 500px;
   height: 60px;
   padding: 10px;
   border-radius: 20px;
+
+  .adding-buttons {
+    display: flex;
+  }
   
   button {
     display: flex;

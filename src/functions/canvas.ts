@@ -80,3 +80,21 @@ export const changeElementOrder = (
 
   return [changedCanvasItems, changedSelectedItem];
 };
+
+export const deleteCanvasItem = (canvasItems: CanvasElement[], selectedItemId: string) => {
+  const changedCanvasItems = [...canvasItems];
+
+  const selectedIndex = changedCanvasItems.findIndex((item) => item.id === selectedItemId);
+  const selectedZIndex = changedCanvasItems[selectedIndex].styles.zIndex;
+
+  changedCanvasItems.splice(selectedIndex, 1);
+  const deletedCanvasItems = changedCanvasItems.map((item) => {
+    if (item.styles.zIndex < selectedZIndex) {
+      return item;
+    } else {
+      return { ...item, styles: { ...item.styles, zIndex: item.styles.zIndex - 1 } };
+    }
+  });
+
+  return deletedCanvasItems;
+};
