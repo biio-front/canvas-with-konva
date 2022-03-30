@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { changeElementOrder, changeElementStyle, changeElementText } from '../functions/canvas';
+import {
+  changeElementImage,
+  changeElementOrder,
+  changeElementStyle,
+  changeElementText,
+} from '../functions/canvas';
 import { CanvasElement, Canvas } from '../type/canvas';
 
 type State = {
@@ -31,12 +36,15 @@ const canvasSlice = createSlice({
       state.canvas.items = [...state.canvas.items, payload];
     },
     modifyElement: (state, { payload }) => {
+      const { type, changedValues } = payload;
       let changedElements = {} as CanvasElement[];
 
-      if (typeof payload === 'string') {
-        changedElements = changeElementText(state.canvas.items, state.selectedItem, payload);
+      if (type === 'text') {
+        changedElements = changeElementText(state.canvas.items, state.selectedItem, changedValues);
+      } else if (type === 'image') {
+        changedElements = changeElementImage(state.canvas.items, state.selectedItem, changedValues);
       } else {
-        changedElements = changeElementStyle(state.canvas.items, state.selectedItem, payload);
+        changedElements = changeElementStyle(state.canvas.items, state.selectedItem, changedValues);
       }
 
       state.canvas.items = changedElements;
@@ -49,6 +57,9 @@ const canvasSlice = createSlice({
     },
     modifySelectedItemText: (state, { payload }) => {
       state.selectedItem.text = payload;
+    },
+    modifySelectedItemImage: (state, { payload }) => {
+      state.selectedItem.image = payload;
     },
     changeElementOrderUp: (state, { payload: selectedIndex }) => {
       const [changedCanvasItems, changedSelectedItem] = changeElementOrder(
@@ -83,6 +94,7 @@ export const {
   selectItem,
   modifySelectedItem,
   modifySelectedItemText,
+  modifySelectedItemImage,
   changeElementOrderUp,
   changeElementOrderDown,
 } = canvasSlice.actions;

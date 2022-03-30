@@ -4,6 +4,7 @@ import { shallowEqual } from 'react-redux';
 import Customizing from '../components/Customizing';
 import CustomizingText from '../components/Customizing/Text';
 import CustomizingShape from '../components/Customizing/Shape';
+import CustomizingImage from '../components/Customizing/Image';
 import AddingBoard from '../components/AddingBoard';
 import Canvas from '../components/Canvas';
 import Layer from '../components/Layer';
@@ -43,6 +44,7 @@ function Playground() {
         {selectedItemType === '' && <Customizing />}
         {selectedItemType === 'text' && <CustomizingText />}
         {selectedItemType === 'shape' && <CustomizingShape />}
+        {selectedItemType === 'image' && <CustomizingImage />}
       </div>
 
       <div className='container adding'>

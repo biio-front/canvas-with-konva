@@ -8,6 +8,6 @@ export const changeStyle = (
 ) => {
   const { value } = event.target;
 
-  dispatch(modifyElement({ [kind]: value }));
+  dispatch(modifyElement({ type: 'style', changedValues: { [kind]: value } }));
   dispatch(modifySelectedItem({ [kind]: value }));
 };

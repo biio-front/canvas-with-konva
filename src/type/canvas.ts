@@ -9,6 +9,7 @@ export type CanvasElement = {
   id: string;
   styles: ElementStyle;
   text?: string;
+  image?: { src: string; alt: string };
 };
 
 export type Background = {

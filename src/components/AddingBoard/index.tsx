@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useRef } from 'react';
 import { shallowEqual } from 'react-redux';
+import { useImageInput } from '../../hooks/useImageInput';
 
 import { addElement, modifyBackground, selectItem } from '../../reducers/canvas';
 import { useAppDispatch, useAppSelector } from '../../store';
@@ -23,7 +24,18 @@ function AddingBoard() {
     styles: { posX: 20, posY: 20, zIndex: 0 },
   };
 
-  const [toggle, setToggle] = useState(false);
+  const { onChange } = useImageInput('');
+
+  const bgColorRef = useRef<HTMLInputElement>(null);
+  const imageRef = useRef<HTMLInputElement>(null);
+
+  const onClickHiddenInput = (inputRef: React.RefObject<HTMLInputElement>) => {
+    if (!inputRef?.current) {
+      return;
+    }
+
+    inputRef.current.click();
+  };
 
   return (
     <div className='adding-board'>
@@ -33,23 +45,21 @@ function AddingBoard() {
           type='button'
           onClick={() => {
             dispatch(selectItem(INITIAL_ITEM));
-            setToggle((prev) => !prev);
+            onClickHiddenInput(bgColorRef);
           }}
         >
           <span className='material-icons'>format_color_fill</span>
         </button>
-
-        {toggle && (
-          <input
-            className='bg-color-input'
-            type='color'
-            value={background.color}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setToggle(false);
-              dispatch(modifyBackground({ color: event.target.value }));
-            }}
-          />
-        )}
+        <input
+          className='bg-color-input'
+          type='color'
+          value={background.color}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            dispatch(modifyBackground({ color: event.target.value }));
+          }}
+          hidden
+          ref={bgColorRef}
+        />
       </div>
 
       <button
@@ -124,6 +134,52 @@ function AddingBoard() {
         }}
       >
         <span className='material-icons'>lens</span>
+      </button>
+
+      <button className='image' type='button' onClick={() => onClickHiddenInput(imageRef)}>
+        <span className='material-icons'>image</span>
+        <input
+          type='file'
+          accept='image/*'
+          hidden
+          ref={imageRef}
+          onChange={(event) => {
+            const targetFile = event.target.files || [];
+            const changedFile = targetFile[0];
+
+            if (changedFile) {
+              onChange(event);
+
+              const reader = new FileReader();
+
+              reader.readAsDataURL(changedFile);
+              reader.onload = (readEvent: any) => {
+                const element = {
+                  type: 'image',
+                  className: 'image',
+                  id: `item-${canvasElements.length}`,
+                  styles: {
+                    posX: 20,
+                    posY: 20,
+                    width: 200,
+                    height: 200,
+                    zIndex: canvasElements.length,
+                    borderWidth: '0',
+                    borderStyle: 'solid',
+                    borderColor: '#000000',
+                  },
+                  image: {
+                    src: readEvent.target.result,
+                    alt: changedFile.name,
+                  },
+                };
+
+                dispatch(addElement(element));
+                dispatch(selectItem(element));
+              };
+            }
+          }}
+        />
       </button>
     </div>
   );

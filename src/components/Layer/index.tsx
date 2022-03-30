@@ -5,6 +5,8 @@ import { shallowEqual } from 'react-redux';
 import { changeElementOrderDown, changeElementOrderUp, selectItem } from '../../reducers/canvas';
 import { useAppDispatch, useAppSelector } from '../../store';
 
+import './index.scss';
+
 function Layer() {
   const dispatch = useAppDispatch();
 
@@ -57,8 +59,14 @@ function Layer() {
               }}
               draggable
             >
+              <span className='material-icons' style={{ color: item.styles.color || '#444444' }}>
+                {(item.className === 'text' && 'text_fields') ||
+                  (item.className === 'rectangle' && 'rectangle') ||
+                  (item.className === 'circle' && 'lens') ||
+                  (item.className === 'image' && 'image')}
+              </span>
+
               {item.id}
-              {item.className}
             </li>
           );
         })}
