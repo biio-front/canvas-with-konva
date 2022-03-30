@@ -1,6 +1,6 @@
 import { DragEvent, useState } from 'react';
 import { shallowEqual } from 'react-redux';
-import { modifyElement, modifySelectedItem, selectItem } from '../../reducers/canvas';
+import { modifyCanvasItemStyle, selectItem } from '../../reducers/canvas';
 
 import CanvasText from './Text';
 import CanvasShape from './Shape';
@@ -33,10 +33,6 @@ function Canvas() {
         const onClick = (event: React.MouseEvent | React.DragEvent) => {
           setStartX(event.clientX);
           setStartY(event.clientY);
-        };
-
-        const onDragStart = (event: React.DragEvent) => {
-          onClick(event);
           dispatch(selectItem(element));
         };
 
@@ -50,8 +46,7 @@ function Canvas() {
           const posX = prevPosX + moveX;
           const posY = prevPosY + moveY;
 
-          dispatch(modifySelectedItem({ posX, posY }));
-          dispatch(modifyElement({ type: 'style', changedValues: { posX, posY } }));
+          dispatch(modifyCanvasItemStyle({ posX, posY }));
         };
 
         const resize = (event: DragEvent, directions: string[], kind: 'drag' | 'dragend') => {
@@ -72,13 +67,7 @@ function Canvas() {
             selectedElement.style.top = `${newPosY}px`;
 
             if (kind === 'dragend') {
-              dispatch(
-                modifyElement({
-                  type: 'style',
-                  changedValues: { posY: newPosY, height: newHeight },
-                }),
-              );
-              dispatch(modifySelectedItem({ posY: newPosY, height: newHeight }));
+              dispatch(modifyCanvasItemStyle({ posY: newPosY, height: newHeight }));
             }
           }
 
@@ -90,10 +79,7 @@ function Canvas() {
             selectedElement.style.left = `${newPosX}px`;
 
             if (kind === 'dragend') {
-              dispatch(
-                modifyElement({ type: 'style', changedValues: { posX: newPosX, width: newWidth } }),
-              );
-              dispatch(modifySelectedItem({ posX: newPosX, width: newWidth }));
+              dispatch(modifyCanvasItemStyle({ posX: newPosX, width: newWidth }));
             }
           }
 
@@ -103,8 +89,7 @@ function Canvas() {
             selectedElement.style.width = `${newWidth}px`;
 
             if (kind === 'dragend') {
-              dispatch(modifyElement({ type: 'style', changedValues: { width: newWidth } }));
-              dispatch(modifySelectedItem({ width: newWidth }));
+              dispatch(modifyCanvasItemStyle({ width: newWidth }));
             }
           }
 
@@ -114,8 +99,7 @@ function Canvas() {
             selectedElement.style.height = `${newHeight}px`;
 
             if (kind === 'dragend') {
-              dispatch(modifyElement({ type: 'style', changedValues: { height: newHeight } }));
-              dispatch(modifySelectedItem({ height: newHeight }));
+              dispatch(modifyCanvasItemStyle({ height: newHeight }));
             }
           }
         };
@@ -131,7 +115,7 @@ function Canvas() {
               height: element.styles.height,
               zIndex: element.styles.zIndex,
             }}
-            onDragStart={onDragStart}
+            onDragStart={onClick}
             onDragEnd={onDragEnd}
             draggable
           >

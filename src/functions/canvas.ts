@@ -13,7 +13,7 @@ export const changeElementStyle = (
     },
   };
 
-  const changedElements = changeElement(elements, selectedItem, changedSelectedElement);
+  const changedElements = changeElements(elements, selectedItem, changedSelectedElement);
   return changedElements;
 };
 
@@ -27,7 +27,7 @@ export const changeElementText = (
     text: changedText,
   };
 
-  const changedElements = changeElement(elements, selectedItem, changedSelectedElement);
+  const changedElements = changeElements(elements, selectedItem, changedSelectedElement);
   return changedElements;
 };
 
@@ -41,11 +41,11 @@ export const changeElementImage = (
     image: changedImage,
   };
 
-  const changedElements = changeElement(elements, selectedItem, changedSelectedElement);
+  const changedElements = changeElements(elements, selectedItem, changedSelectedElement);
   return changedElements;
 };
 
-export const changeElement = (
+export const changeElements = (
   elements: CanvasElement[],
   selectedItem: CanvasElement,
   changedSelectedElement: CanvasElement,
@@ -81,7 +81,7 @@ export const changeElementOrder = (
   return [changedCanvasItems, changedSelectedItem];
 };
 
-export const deleteCanvasItem = (canvasItems: CanvasElement[], selectedItemId: string) => {
+export const deleteElement = (canvasItems: CanvasElement[], selectedItemId: string) => {
   const changedCanvasItems = [...canvasItems];
 
   const selectedIndex = changedCanvasItems.findIndex((item) => item.id === selectedItemId);

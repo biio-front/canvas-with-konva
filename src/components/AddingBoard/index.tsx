@@ -2,7 +2,12 @@ import { useRef } from 'react';
 import { shallowEqual } from 'react-redux';
 import { useImageInput } from '../../hooks/useImageInput';
 
-import { addElement, deleteElement, modifyBackground, selectItem } from '../../reducers/canvas';
+import {
+  addCanvasItem,
+  deleteCanvasItem,
+  modifyBackground,
+  selectItem,
+} from '../../reducers/canvas';
 import { useAppDispatch, useAppSelector } from '../../store';
 
 import './index.scss';
@@ -17,13 +22,6 @@ function AddingBoard() {
     }),
     shallowEqual,
   );
-
-  const INITIAL_ITEM = {
-    type: '',
-    className: '',
-    id: '',
-    styles: { posX: 20, posY: 20, zIndex: 0 },
-  };
 
   const { onChange } = useImageInput('');
 
@@ -45,14 +43,7 @@ function AddingBoard() {
     <div className='adding-board'>
       <div className='adding-buttons'>
         <div className='bg-color-button'>
-          <button
-            className='paint'
-            type='button'
-            onClick={() => {
-              dispatch(selectItem(INITIAL_ITEM));
-              onClickHiddenInput(bgColorRef);
-            }}
-          >
+          <button className='paint' type='button' onClick={() => onClickHiddenInput(bgColorRef)}>
             <span className='material-icons'>format_color_fill</span>
           </button>
           <input
@@ -73,11 +64,11 @@ function AddingBoard() {
             const element = {
               type: 'text',
               className: 'text',
-              id: `item-${newElementIndex}`,
+              id: `text-${newElementIndex}`,
               styles: { posX: 20, posY: 20, width: 100, height: 30, zIndex: newElementZIndex },
             };
 
-            dispatch(addElement(element));
+            dispatch(addCanvasItem(element));
             dispatch(selectItem(element));
           }}
         >
@@ -91,7 +82,7 @@ function AddingBoard() {
             const element = {
               type: 'shape',
               className: 'rectangle',
-              id: `item-${newElementIndex}`,
+              id: `rectangle-${newElementIndex}`,
               styles: {
                 posX: 20,
                 posY: 20,
@@ -105,7 +96,7 @@ function AddingBoard() {
               },
             };
 
-            dispatch(addElement(element));
+            dispatch(addCanvasItem(element));
             dispatch(selectItem(element));
           }}
         >
@@ -119,7 +110,7 @@ function AddingBoard() {
             const element = {
               type: 'shape',
               className: 'circle',
-              id: `item-${newElementIndex}`,
+              id: `circle-${newElementIndex}`,
               styles: {
                 posX: 20,
                 posY: 20,
@@ -133,7 +124,7 @@ function AddingBoard() {
               },
             };
 
-            dispatch(addElement(element));
+            dispatch(addCanvasItem(element));
             dispatch(selectItem(element));
           }}
         >
@@ -161,7 +152,7 @@ function AddingBoard() {
                   const element = {
                     type: 'image',
                     className: 'image',
-                    id: `item-${newElementIndex}`,
+                    id: `image-${newElementIndex}`,
                     styles: {
                       posX: 20,
                       posY: 20,
@@ -178,7 +169,7 @@ function AddingBoard() {
                     },
                   };
 
-                  dispatch(addElement(element));
+                  dispatch(addCanvasItem(element));
                   dispatch(selectItem(element));
                 };
               }
@@ -188,7 +179,7 @@ function AddingBoard() {
       </div>
 
       <div className='delete-button'>
-        <button type='button' onClick={() => dispatch(deleteElement())}>
+        <button type='button' onClick={() => dispatch(deleteCanvasItem())}>
           <span className='material-icons'>delete</span>
         </button>
       </div>

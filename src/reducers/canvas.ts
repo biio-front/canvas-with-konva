@@ -4,7 +4,7 @@ import {
   changeElementOrder,
   changeElementStyle,
   changeElementText,
-  deleteCanvasItem,
+  deleteElement,
 } from '../functions/canvas';
 import { CanvasElement, Canvas } from '../type/canvas';
 
@@ -35,59 +35,45 @@ const canvasSlice = createSlice({
     modifyBackground: (state, { payload }) => {
       state.canvas.background = { ...state.canvas.background, ...payload };
     },
-    addElement: (state, { payload }) => {
+    addCanvasItem: (state, { payload }) => {
       state.canvas.items = [...state.canvas.items, payload];
-    },
-    modifyElement: (state, { payload }) => {
-      const { type, changedValues } = payload;
-      let changedElements = {} as CanvasElement[];
-
-      if (type === 'text') {
-        changedElements = changeElementText(state.canvas.items, state.selectedItem, changedValues);
-      } else if (type === 'image') {
-        changedElements = changeElementImage(state.canvas.items, state.selectedItem, changedValues);
-      } else {
-        changedElements = changeElementStyle(state.canvas.items, state.selectedItem, changedValues);
-      }
-
-      state.canvas.items = changedElements;
     },
     selectItem: (state, { payload }) => {
       state.selectedItem = payload;
     },
-    modifySelectedItem: (state, { payload }) => {
+    modifyCanvasItemStyle: (state, { payload }) => {
+      const changedElements = changeElementStyle(state.canvas.items, state.selectedItem, payload);
+
+      state.canvas.items = changedElements;
       state.selectedItem.styles = { ...state.selectedItem.styles, ...payload };
     },
-    modifySelectedItemText: (state, { payload }) => {
+    modifyCanvasItemText: (state, { payload }) => {
+      const changedElements = changeElementText(state.canvas.items, state.selectedItem, payload);
+
+      state.canvas.items = changedElements;
       state.selectedItem.text = payload;
     },
-    modifySelectedItemImage: (state, { payload }) => {
+    modifyCanvasItemImage: (state, { payload }) => {
+      const changedElements = changeElementImage(state.canvas.items, state.selectedItem, payload);
+
+      state.canvas.items = changedElements;
       state.selectedItem.image = payload;
     },
-    changeElementOrderUp: (state, { payload: selectedIndex }) => {
+    modifyCanvasItemOrder: (state, { payload }) => {
+      const { selectedIndex, direction } = payload;
+
       const [changedCanvasItems, changedSelectedItem] = changeElementOrder(
         selectedIndex,
         state.canvas.items,
         state.selectedItem,
-        'up',
+        direction,
       );
 
       state.canvas.items = changedCanvasItems;
       state.selectedItem = changedSelectedItem;
     },
-    changeElementOrderDown: (state, { payload: selectedIndex }) => {
-      const [changedCanvasItems, changedSelectedItem] = changeElementOrder(
-        selectedIndex,
-        state.canvas.items,
-        state.selectedItem,
-        'down',
-      );
-
-      state.canvas.items = changedCanvasItems;
-      state.selectedItem = changedSelectedItem;
-    },
-    deleteElement: (state) => {
-      const deletedCanvasItems = deleteCanvasItem(state.canvas.items, state.selectedItem.id);
+    deleteCanvasItem: (state) => {
+      const deletedCanvasItems = deleteElement(state.canvas.items, state.selectedItem.id);
 
       state.canvas.items = deletedCanvasItems;
       state.selectedItem = initialState.selectedItem;
@@ -99,14 +85,12 @@ const canvasSlice = createSlice({
 export const {
   getCanvas,
   modifyBackground,
-  addElement,
-  modifyElement,
+  addCanvasItem,
   selectItem,
-  modifySelectedItem,
-  modifySelectedItemText,
-  modifySelectedItemImage,
-  changeElementOrderUp,
-  changeElementOrderDown,
-  deleteElement,
+  modifyCanvasItemStyle,
+  modifyCanvasItemText,
+  modifyCanvasItemImage,
+  modifyCanvasItemOrder,
+  deleteCanvasItem,
 } = canvasSlice.actions;
 export default canvasSlice.reducer;

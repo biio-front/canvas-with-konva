@@ -2,12 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { shallowEqual } from 'react-redux';
 
-import {
-  changeElementOrderDown,
-  changeElementOrderUp,
-  selectItem,
-  deleteElement,
-} from '../../reducers/canvas';
+import { modifyCanvasItemOrder, selectItem, deleteCanvasItem } from '../../reducers/canvas';
 import { useAppDispatch, useAppSelector } from '../../store';
 
 import './index.scss';
@@ -31,7 +26,7 @@ function Layer() {
           type='button'
           onClick={() => {
             if (selectedZIndex < canvasItems.length - 1) {
-              dispatch(changeElementOrderUp(selectedZIndex));
+              dispatch(modifyCanvasItemOrder({ selectedIndex: selectedZIndex, direction: 'up' }));
             }
           }}
         >
@@ -42,7 +37,7 @@ function Layer() {
           type='button'
           onClick={() => {
             if (selectedZIndex > 0) {
-              dispatch(changeElementOrderDown(selectedZIndex));
+              dispatch(modifyCanvasItemOrder({ selectedIndex: selectedZIndex, direction: 'down' }));
             }
           }}
         >
@@ -78,7 +73,7 @@ function Layer() {
               <button
                 className='material-icons delete-button'
                 type='button'
-                onClick={() => dispatch(deleteElement())}
+                onClick={() => dispatch(deleteCanvasItem())}
               >
                 remove_circle
               </button>
