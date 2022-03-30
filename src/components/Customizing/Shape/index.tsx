@@ -1,7 +1,7 @@
 import { shallowEqual } from 'react-redux';
-import { useAppDispatch, useAppSelector } from '../../../store';
 
-import { changeStyle } from '../../../functions/customizing';
+import { useAppDispatch, useAppSelector } from '../../../store';
+import { modifyCanvasItemStyle } from '../../../reducers/canvas';
 
 function CustomizingShape() {
   const dispatch = useAppDispatch();
@@ -31,7 +31,7 @@ function CustomizingShape() {
           <input
             type='color'
             value={color}
-            onChange={(event) => changeStyle(event, dispatch, 'color')}
+            onChange={(event) => dispatch(modifyCanvasItemStyle({ color: event.target.value }))}
           />
         </label>
 
@@ -39,7 +39,9 @@ function CustomizingShape() {
           <div>외곽선</div>
           <select
             value={borderWidth}
-            onChange={(event) => changeStyle(event, dispatch, 'borderWidth')}
+            onChange={(event) =>
+              dispatch(modifyCanvasItemStyle({ borderWidth: event.target.value }))
+            }
           >
             <option>0px</option>
             <option>1px</option>
@@ -55,7 +57,9 @@ function CustomizingShape() {
           <input
             type='color'
             value={borderColor}
-            onChange={(event) => changeStyle(event, dispatch, 'borderColor')}
+            onChange={(event) =>
+              dispatch(modifyCanvasItemStyle({ borderColor: event.target.value }))
+            }
           />
         </label>
 
@@ -63,7 +67,9 @@ function CustomizingShape() {
           <div>외곽선 종류</div>
           <select
             value={borderStyle}
-            onChange={(event) => changeStyle(event, dispatch, 'borderStyle')}
+            onChange={(event) =>
+              dispatch(modifyCanvasItemStyle({ borderStyle: event.target.value }))
+            }
           >
             <option>solid</option>
             <option>dashed</option>

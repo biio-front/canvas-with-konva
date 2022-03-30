@@ -1,9 +1,9 @@
 import { shallowEqual } from 'react-redux';
+
+import { modifyCanvasItemImage, modifyCanvasItemStyle } from '../../../reducers/canvas';
 import { useAppDispatch, useAppSelector } from '../../../store';
 
-import { changeStyle } from '../../../functions/customizing';
 import { useImageInput } from '../../../hooks/useImageInput';
-import { modifyCanvasItemImage } from '../../../reducers/canvas';
 
 function CustomizingImage() {
   const dispatch = useAppDispatch();
@@ -55,11 +55,13 @@ function CustomizingImage() {
           />
         </label>
 
-        <label htmlFor='border-color'>
+        <label htmlFor='border-width'>
           <div>외곽선</div>
           <select
             value={borderWidth}
-            onChange={(event) => changeStyle(event, dispatch, 'borderWidth')}
+            onChange={(event) =>
+              dispatch(modifyCanvasItemStyle({ borderWidth: event.target.value }))
+            }
           >
             <option>0px</option>
             <option>1px</option>
@@ -70,20 +72,24 @@ function CustomizingImage() {
           </select>
         </label>
 
-        <label htmlFor='border-width'>
+        <label htmlFor='border-color'>
           <div>외곽선 색상</div>
           <input
             type='color'
             value={borderColor}
-            onChange={(event) => changeStyle(event, dispatch, 'borderColor')}
+            onChange={(event) =>
+              dispatch(modifyCanvasItemStyle({ borderColor: event.target.value }))
+            }
           />
         </label>
 
-        <label htmlFor='border-width'>
+        <label htmlFor='border-style'>
           <div>외곽선 종류</div>
           <select
             value={borderStyle}
-            onChange={(event) => changeStyle(event, dispatch, 'borderStyle')}
+            onChange={(event) =>
+              dispatch(modifyCanvasItemStyle({ borderStyle: event.target.value }))
+            }
           >
             <option>solid</option>
             <option>dashed</option>

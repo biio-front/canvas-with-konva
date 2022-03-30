@@ -1,7 +1,7 @@
 import { shallowEqual } from 'react-redux';
-import { useAppDispatch, useAppSelector } from '../../../store';
 
-import { changeStyle } from '../../../functions/customizing';
+import { useAppDispatch, useAppSelector } from '../../../store';
+import { modifyCanvasItemStyle } from '../../../reducers/canvas';
 
 function CustomizingText() {
   const dispatch = useAppDispatch();
@@ -29,7 +29,7 @@ function CustomizingText() {
             <input
               type='color'
               value={color || '000000'}
-              onChange={(event) => changeStyle(event, dispatch, 'color')}
+              onChange={(event) => dispatch(modifyCanvasItemStyle({ color: event.target.value }))}
             />
           </label>
 
@@ -38,7 +38,9 @@ function CustomizingText() {
               <div>텍스트 크기</div>
               <select
                 value={fontSize || '16px'}
-                onChange={(event) => changeStyle(event, dispatch, 'fontSize')}
+                onChange={(event) =>
+                  dispatch(modifyCanvasItemStyle({ fontSize: event.target.value }))
+                }
               >
                 <option>10px</option>
                 <option>13px</option>
@@ -55,7 +57,9 @@ function CustomizingText() {
             <div>폰트</div>
             <select
               value={fontFamily || 'sans-serif'}
-              onChange={(event) => changeStyle(event, dispatch, 'fontFamily')}
+              onChange={(event) =>
+                dispatch(modifyCanvasItemStyle({ fontFamily: event.target.value }))
+              }
             >
               <option>sans-serif</option>
               <option className='Kanit'>Kanit</option>
@@ -70,7 +74,9 @@ function CustomizingText() {
             <div>글씨 굵기</div>
             <select
               value={fontWeight || 'normal'}
-              onChange={(event) => changeStyle(event, dispatch, 'fontWeight')}
+              onChange={(event) =>
+                dispatch(modifyCanvasItemStyle({ fontWeight: event.target.value }))
+              }
             >
               <option>lighter</option>
               <option>normal</option>
@@ -84,7 +90,9 @@ function CustomizingText() {
             <div>텍스트 정렬</div>
             <select
               value={textAlign || 'left'}
-              onChange={(event) => changeStyle(event, dispatch, 'textAlign')}
+              onChange={(event) =>
+                dispatch(modifyCanvasItemStyle({ textAlign: event.target.value }))
+              }
             >
               <option>left</option>
               <option>center</option>
