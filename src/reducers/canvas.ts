@@ -4,12 +4,14 @@ import {
   changeElementOrder,
   changeElementStyle,
   changeElementText,
+  deleteCanvasItem,
 } from '../functions/canvas';
 import { CanvasElement, Canvas } from '../type/canvas';
 
 type State = {
   canvas: Canvas;
   selectedItem: CanvasElement;
+  deletedCount: number;
 };
 
 const initialState = {
@@ -20,6 +22,7 @@ const initialState = {
     id: '',
     styles: { posX: 20, posY: 20, width: 100, height: 30, zIndex: 0 },
   },
+  deletedCount: 0,
 } as State;
 
 const canvasSlice = createSlice({
@@ -83,6 +86,13 @@ const canvasSlice = createSlice({
       state.canvas.items = changedCanvasItems;
       state.selectedItem = changedSelectedItem;
     },
+    deleteElement: (state) => {
+      const deletedCanvasItems = deleteCanvasItem(state.canvas.items, state.selectedItem.id);
+
+      state.canvas.items = deletedCanvasItems;
+      state.selectedItem = initialState.selectedItem;
+      state.deletedCount += 1;
+    },
   },
 });
 
@@ -97,5 +107,6 @@ export const {
   modifySelectedItemImage,
   changeElementOrderUp,
   changeElementOrderDown,
+  deleteElement,
 } = canvasSlice.actions;
 export default canvasSlice.reducer;

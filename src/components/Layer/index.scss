@@ -34,14 +34,35 @@
 
       display: flex;
       align-items: center;
+      justify-content: space-between;
+
+      .item {
+        display: flex;
+        align-items: center;
+        
+        .material-icons {
+          margin-right: 0.5rem;
+        }
+      }
+      
+      .delete-button{
+        display: none;
+      }
 
       &.selected {
         border: 1px solid #a4a4a4;
         border-radius: 0.5rem;
-      }
 
-      .material-icons {
-        margin-right: 0.5rem;
+        .delete-button {
+          display: block;
+  
+          margin-right: 0;
+          padding: 0px;
+          border: none;
+  
+          background-color: inherit;
+          color: #d40b0bb7;
+        }
       }
     }
   }
