@@ -1,4 +1,4 @@
-import { modifyCanvasItem, modifySelectedItem } from '../reducers/canvas';
+import { modifyCanvasItemStyle } from '../reducers/canvas';
 import { AppDispatch } from '../store';
 
 export const changeStyle = (
@@ -8,6 +8,5 @@ export const changeStyle = (
 ) => {
   const { value } = event.target;
 
-  dispatch(modifyCanvasItem({ type: 'style', changedValues: { [kind]: value } }));
-  dispatch(modifySelectedItem({ [kind]: value }));
+  dispatch(modifyCanvasItemStyle({ [kind]: value }));
 };

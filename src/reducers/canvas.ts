@@ -38,30 +38,25 @@ const canvasSlice = createSlice({
     addCanvasItem: (state, { payload }) => {
       state.canvas.items = [...state.canvas.items, payload];
     },
-    modifyCanvasItem: (state, { payload }) => {
-      const { type, changedValues } = payload;
-      let changedElements = {} as CanvasElement[];
-
-      if (type === 'text') {
-        changedElements = changeElementText(state.canvas.items, state.selectedItem, changedValues);
-      } else if (type === 'image') {
-        changedElements = changeElementImage(state.canvas.items, state.selectedItem, changedValues);
-      } else {
-        changedElements = changeElementStyle(state.canvas.items, state.selectedItem, changedValues);
-      }
-
-      state.canvas.items = changedElements;
-    },
     selectItem: (state, { payload }) => {
       state.selectedItem = payload;
     },
-    modifySelectedItem: (state, { payload }) => {
+    modifyCanvasItemStyle: (state, { payload }) => {
+      const changedElements = changeElementStyle(state.canvas.items, state.selectedItem, payload);
+
+      state.canvas.items = changedElements;
       state.selectedItem.styles = { ...state.selectedItem.styles, ...payload };
     },
-    modifySelectedItemText: (state, { payload }) => {
+    modifyCanvasItemText: (state, { payload }) => {
+      const changedElements = changeElementText(state.canvas.items, state.selectedItem, payload);
+
+      state.canvas.items = changedElements;
       state.selectedItem.text = payload;
     },
-    modifySelectedItemImage: (state, { payload }) => {
+    modifyCanvasItemImage: (state, { payload }) => {
+      const changedElements = changeElementImage(state.canvas.items, state.selectedItem, payload);
+
+      state.canvas.items = changedElements;
       state.selectedItem.image = payload;
     },
     modifyCanvasItemOrder: (state, { payload }) => {
@@ -91,11 +86,10 @@ export const {
   getCanvas,
   modifyBackground,
   addCanvasItem,
-  modifyCanvasItem,
   selectItem,
-  modifySelectedItem,
-  modifySelectedItemText,
-  modifySelectedItemImage,
+  modifyCanvasItemStyle,
+  modifyCanvasItemText,
+  modifyCanvasItemImage,
   modifyCanvasItemOrder,
   deleteCanvasItem,
 } = canvasSlice.actions;

@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../../store';
 
 import { changeStyle } from '../../../functions/customizing';
 import { useImageInput } from '../../../hooks/useImageInput';
-import { modifyCanvasItem, modifySelectedItemImage } from '../../../reducers/canvas';
+import { modifyCanvasItemImage } from '../../../reducers/canvas';
 
 function CustomizingImage() {
   const dispatch = useAppDispatch();
@@ -48,8 +48,7 @@ function CustomizingImage() {
                     alt: changedFile.name,
                   };
 
-                  dispatch(modifyCanvasItem({ type: 'image', changedValues: image }));
-                  dispatch(modifySelectedItemImage(image));
+                  dispatch(modifyCanvasItemImage(image));
                 };
               }
             }}
