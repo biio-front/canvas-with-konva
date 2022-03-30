@@ -81,7 +81,7 @@ export const changeElementOrder = (
   return [changedCanvasItems, changedSelectedItem];
 };
 
-export const deleteCanvasItem = (canvasItems: CanvasElement[], selectedItemId: string) => {
+export const deleteElement = (canvasItems: CanvasElement[], selectedItemId: string) => {
   const changedCanvasItems = [...canvasItems];
 
   const selectedIndex = changedCanvasItems.findIndex((item) => item.id === selectedItemId);

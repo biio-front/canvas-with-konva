@@ -1,6 +1,6 @@
 import { DragEvent, useState } from 'react';
 import { shallowEqual } from 'react-redux';
-import { modifyElement, modifySelectedItem, selectItem } from '../../reducers/canvas';
+import { modifyCanvasItem, modifySelectedItem, selectItem } from '../../reducers/canvas';
 
 import CanvasText from './Text';
 import CanvasShape from './Shape';
@@ -51,7 +51,7 @@ function Canvas() {
           const posY = prevPosY + moveY;
 
           dispatch(modifySelectedItem({ posX, posY }));
-          dispatch(modifyElement({ type: 'style', changedValues: { posX, posY } }));
+          dispatch(modifyCanvasItem({ type: 'style', changedValues: { posX, posY } }));
         };
 
         const resize = (event: DragEvent, directions: string[], kind: 'drag' | 'dragend') => {
@@ -73,7 +73,7 @@ function Canvas() {
 
             if (kind === 'dragend') {
               dispatch(
-                modifyElement({
+                modifyCanvasItem({
                   type: 'style',
                   changedValues: { posY: newPosY, height: newHeight },
                 }),
@@ -91,7 +91,10 @@ function Canvas() {
 
             if (kind === 'dragend') {
               dispatch(
-                modifyElement({ type: 'style', changedValues: { posX: newPosX, width: newWidth } }),
+                modifyCanvasItem({
+                  type: 'style',
+                  changedValues: { posX: newPosX, width: newWidth },
+                }),
               );
               dispatch(modifySelectedItem({ posX: newPosX, width: newWidth }));
             }
@@ -103,7 +106,7 @@ function Canvas() {
             selectedElement.style.width = `${newWidth}px`;
 
             if (kind === 'dragend') {
-              dispatch(modifyElement({ type: 'style', changedValues: { width: newWidth } }));
+              dispatch(modifyCanvasItem({ type: 'style', changedValues: { width: newWidth } }));
               dispatch(modifySelectedItem({ width: newWidth }));
             }
           }
@@ -114,7 +117,7 @@ function Canvas() {
             selectedElement.style.height = `${newHeight}px`;
 
             if (kind === 'dragend') {
-              dispatch(modifyElement({ type: 'style', changedValues: { height: newHeight } }));
+              dispatch(modifyCanvasItem({ type: 'style', changedValues: { height: newHeight } }));
               dispatch(modifySelectedItem({ height: newHeight }));
             }
           }

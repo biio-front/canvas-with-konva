@@ -1,4 +1,4 @@
-import { modifyElement, modifySelectedItemText, selectItem } from '../../../reducers/canvas';
+import { modifyCanvasItem, modifySelectedItemText, selectItem } from '../../../reducers/canvas';
 import { useAppDispatch } from '../../../store';
 
 import { CanvasElement } from '../../../type/canvas';
@@ -33,7 +33,7 @@ function CanvasText({ onClick, element }: Props) {
       onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const { value } = event.target;
 
-        dispatch(modifyElement({ type: 'text', changedValues: value }));
+        dispatch(modifyCanvasItem({ type: 'text', changedValues: value }));
         dispatch(modifySelectedItemText(value));
       }}
       onClick={(event) => onClickText(event)}

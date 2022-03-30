@@ -2,7 +2,12 @@ import { useRef } from 'react';
 import { shallowEqual } from 'react-redux';
 import { useImageInput } from '../../hooks/useImageInput';
 
-import { addElement, deleteElement, modifyBackground, selectItem } from '../../reducers/canvas';
+import {
+  addCanvasItem,
+  deleteCanvasItem,
+  modifyBackground,
+  selectItem,
+} from '../../reducers/canvas';
 import { useAppDispatch, useAppSelector } from '../../store';
 
 import './index.scss';
@@ -63,7 +68,7 @@ function AddingBoard() {
               styles: { posX: 20, posY: 20, width: 100, height: 30, zIndex: newElementZIndex },
             };
 
-            dispatch(addElement(element));
+            dispatch(addCanvasItem(element));
             dispatch(selectItem(element));
           }}
         >
@@ -91,7 +96,7 @@ function AddingBoard() {
               },
             };
 
-            dispatch(addElement(element));
+            dispatch(addCanvasItem(element));
             dispatch(selectItem(element));
           }}
         >
@@ -119,7 +124,7 @@ function AddingBoard() {
               },
             };
 
-            dispatch(addElement(element));
+            dispatch(addCanvasItem(element));
             dispatch(selectItem(element));
           }}
         >
@@ -164,7 +169,7 @@ function AddingBoard() {
                     },
                   };
 
-                  dispatch(addElement(element));
+                  dispatch(addCanvasItem(element));
                   dispatch(selectItem(element));
                 };
               }
@@ -174,7 +179,7 @@ function AddingBoard() {
       </div>
 
       <div className='delete-button'>
-        <button type='button' onClick={() => dispatch(deleteElement())}>
+        <button type='button' onClick={() => dispatch(deleteCanvasItem())}>
           <span className='material-icons'>delete</span>
         </button>
       </div>

@@ -4,7 +4,7 @@ import {
   changeElementOrder,
   changeElementStyle,
   changeElementText,
-  deleteCanvasItem,
+  deleteElement,
 } from '../functions/canvas';
 import { CanvasElement, Canvas } from '../type/canvas';
 
@@ -35,10 +35,10 @@ const canvasSlice = createSlice({
     modifyBackground: (state, { payload }) => {
       state.canvas.background = { ...state.canvas.background, ...payload };
     },
-    addElement: (state, { payload }) => {
+    addCanvasItem: (state, { payload }) => {
       state.canvas.items = [...state.canvas.items, payload];
     },
-    modifyElement: (state, { payload }) => {
+    modifyCanvasItem: (state, { payload }) => {
       const { type, changedValues } = payload;
       let changedElements = {} as CanvasElement[];
 
@@ -64,30 +64,21 @@ const canvasSlice = createSlice({
     modifySelectedItemImage: (state, { payload }) => {
       state.selectedItem.image = payload;
     },
-    changeElementOrderUp: (state, { payload: selectedIndex }) => {
+    modifyCanvasItemOrder: (state, { payload }) => {
+      const { selectedIndex, direction } = payload;
+
       const [changedCanvasItems, changedSelectedItem] = changeElementOrder(
         selectedIndex,
         state.canvas.items,
         state.selectedItem,
-        'up',
+        direction,
       );
 
       state.canvas.items = changedCanvasItems;
       state.selectedItem = changedSelectedItem;
     },
-    changeElementOrderDown: (state, { payload: selectedIndex }) => {
-      const [changedCanvasItems, changedSelectedItem] = changeElementOrder(
-        selectedIndex,
-        state.canvas.items,
-        state.selectedItem,
-        'down',
-      );
-
-      state.canvas.items = changedCanvasItems;
-      state.selectedItem = changedSelectedItem;
-    },
-    deleteElement: (state) => {
-      const deletedCanvasItems = deleteCanvasItem(state.canvas.items, state.selectedItem.id);
+    deleteCanvasItem: (state) => {
+      const deletedCanvasItems = deleteElement(state.canvas.items, state.selectedItem.id);
 
       state.canvas.items = deletedCanvasItems;
       state.selectedItem = initialState.selectedItem;
@@ -99,14 +90,13 @@ const canvasSlice = createSlice({
 export const {
   getCanvas,
   modifyBackground,
-  addElement,
-  modifyElement,
+  addCanvasItem,
+  modifyCanvasItem,
   selectItem,
   modifySelectedItem,
   modifySelectedItemText,
   modifySelectedItemImage,
-  changeElementOrderUp,
-  changeElementOrderDown,
-  deleteElement,
+  modifyCanvasItemOrder,
+  deleteCanvasItem,
 } = canvasSlice.actions;
 export default canvasSlice.reducer;
