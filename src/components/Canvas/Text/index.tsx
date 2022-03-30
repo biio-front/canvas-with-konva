@@ -1,4 +1,4 @@
-import { modifyCanvasItem, modifySelectedItemText, selectItem } from '../../../reducers/canvas';
+import { modifyCanvasItem, modifySelectedItemText } from '../../../reducers/canvas';
 import { useAppDispatch } from '../../../store';
 
 import { CanvasElement } from '../../../type/canvas';
@@ -13,10 +13,6 @@ type Props = {
 function CanvasText({ onClick, element }: Props) {
   const dispatch = useAppDispatch();
 
-  const onClickText = (event: React.MouseEvent | React.DragEvent) => {
-    onClick(event);
-    dispatch(selectItem(element));
-  };
   return (
     <textarea
       className='canvas-text'
@@ -36,7 +32,7 @@ function CanvasText({ onClick, element }: Props) {
         dispatch(modifyCanvasItem({ type: 'text', changedValues: value }));
         dispatch(modifySelectedItemText(value));
       }}
-      onClick={(event) => onClickText(event)}
+      onClick={(event) => onClick(event)}
     />
   );
 }

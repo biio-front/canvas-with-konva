@@ -33,10 +33,6 @@ function Canvas() {
         const onClick = (event: React.MouseEvent | React.DragEvent) => {
           setStartX(event.clientX);
           setStartY(event.clientY);
-        };
-
-        const onDragStart = (event: React.DragEvent) => {
-          onClick(event);
           dispatch(selectItem(element));
         };
 
@@ -134,7 +130,7 @@ function Canvas() {
               height: element.styles.height,
               zIndex: element.styles.zIndex,
             }}
-            onDragStart={onDragStart}
+            onDragStart={onClick}
             onDragEnd={onDragEnd}
             draggable
           >
