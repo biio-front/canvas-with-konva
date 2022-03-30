@@ -73,7 +73,7 @@ function AddingBoard() {
             const element = {
               type: 'text',
               className: 'text',
-              id: `item-${newElementIndex}`,
+              id: `text-${newElementIndex}`,
               styles: { posX: 20, posY: 20, width: 100, height: 30, zIndex: newElementZIndex },
             };
 
@@ -91,7 +91,7 @@ function AddingBoard() {
             const element = {
               type: 'shape',
               className: 'rectangle',
-              id: `item-${newElementIndex}`,
+              id: `rectangle-${newElementIndex}`,
               styles: {
                 posX: 20,
                 posY: 20,
@@ -119,7 +119,7 @@ function AddingBoard() {
             const element = {
               type: 'shape',
               className: 'circle',
-              id: `item-${newElementIndex}`,
+              id: `circle-${newElementIndex}`,
               styles: {
                 posX: 20,
                 posY: 20,
@@ -161,7 +161,7 @@ function AddingBoard() {
                   const element = {
                     type: 'image',
                     className: 'image',
-                    id: `item-${newElementIndex}`,
+                    id: `image-${newElementIndex}`,
                     styles: {
                       posX: 20,
                       posY: 20,
