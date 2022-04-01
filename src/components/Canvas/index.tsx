@@ -24,6 +24,66 @@ function Canvas() {
 
   const [startX, setStartX] = useState<number>(0);
   const [startY, setStartY] = useState<number>(0);
+  const resize = (
+    event: DragEvent,
+    element: CanvasElement,
+    directions: string[],
+    kind: 'drag' | 'dragend',
+  ) => {
+    event.stopPropagation();
+    const selectedElement = document.querySelector(
+      '.canvas-element.selected',
+    ) as HTMLElement | null;
+
+    if (!selectedElement) {
+      return;
+    }
+
+    if (directions.includes('n')) {
+      const moveY = event.clientY - startY;
+      const newHeight = element.styles.height - moveY;
+      const newPosY = element.styles.posY + moveY;
+      selectedElement.style.height = `${newHeight}px`;
+      selectedElement.style.top = `${newPosY}px`;
+
+      if (kind === 'dragend') {
+        dispatch(modifyCanvasItemStyle({ posY: newPosY, height: newHeight }));
+      }
+    }
+
+    if (directions.includes('w')) {
+      const moveX = event.clientX - startX;
+      const newWidth = element.styles.width - moveX;
+      const newPosX = element.styles.posX + moveX;
+      selectedElement.style.width = `${newWidth}px`;
+      selectedElement.style.left = `${newPosX}px`;
+
+      if (kind === 'dragend') {
+        dispatch(modifyCanvasItemStyle({ posX: newPosX, width: newWidth }));
+      }
+    }
+
+    if (directions.includes('e')) {
+      const moveX = event.clientX - startX;
+      const newWidth = element.styles.width + moveX;
+      selectedElement.style.width = `${newWidth}px`;
+
+      if (kind === 'dragend') {
+        dispatch(modifyCanvasItemStyle({ width: newWidth }));
+      }
+    }
+
+    if (directions.includes('s')) {
+      const moveY = event.clientY - startY;
+      const newHeight = element.styles.height + moveY;
+      selectedElement.style.height = `${newHeight}px`;
+
+      if (kind === 'dragend') {
+        dispatch(modifyCanvasItemStyle({ height: newHeight }));
+      }
+    }
+  };
+
 
   return (
     <div className='canvas' id='canvas' style={{ background: background.color }}>
@@ -49,61 +109,6 @@ function Canvas() {
           dispatch(modifyCanvasItemStyle({ posX, posY }));
         };
 
-        const resize = (event: DragEvent, directions: string[], kind: 'drag' | 'dragend') => {
-          event.stopPropagation();
-          const selectedElement = document.querySelector(
-            '.canvas-element.selected',
-          ) as HTMLElement | null;
-
-          if (!selectedElement) {
-            return;
-          }
-
-          if (directions.includes('n')) {
-            const moveY = event.clientY - startY;
-            const newHeight = element.styles.height - moveY;
-            const newPosY = element.styles.posY + moveY;
-            selectedElement.style.height = `${newHeight}px`;
-            selectedElement.style.top = `${newPosY}px`;
-
-            if (kind === 'dragend') {
-              dispatch(modifyCanvasItemStyle({ posY: newPosY, height: newHeight }));
-            }
-          }
-
-          if (directions.includes('w')) {
-            const moveX = event.clientX - startX;
-            const newWidth = element.styles.width - moveX;
-            const newPosX = element.styles.posX + moveX;
-            selectedElement.style.width = `${newWidth}px`;
-            selectedElement.style.left = `${newPosX}px`;
-
-            if (kind === 'dragend') {
-              dispatch(modifyCanvasItemStyle({ posX: newPosX, width: newWidth }));
-            }
-          }
-
-          if (directions.includes('e')) {
-            const moveX = event.clientX - startX;
-            const newWidth = element.styles.width + moveX;
-            selectedElement.style.width = `${newWidth}px`;
-
-            if (kind === 'dragend') {
-              dispatch(modifyCanvasItemStyle({ width: newWidth }));
-            }
-          }
-
-          if (directions.includes('s')) {
-            const moveY = event.clientY - startY;
-            const newHeight = element.styles.height + moveY;
-            selectedElement.style.height = `${newHeight}px`;
-
-            if (kind === 'dragend') {
-              dispatch(modifyCanvasItemStyle({ height: newHeight }));
-            }
-          }
-        };
-
         return (
           <div
             key={element.id}
@@ -127,50 +132,50 @@ function Canvas() {
 
             <div
               className='element-border n'
-              onDrag={(event) => resize(event, ['n'], 'drag')}
-              onDragEnd={(event) => resize(event, ['n'], 'dragend')}
+              onDrag={(event) => resize(event, element, ['n'], 'drag')}
+              onDragEnd={(event) => resize(event, element, ['n'], 'dragend')}
               draggable
             />
             <div
               className='element-border w'
-              onDrag={(event) => resize(event, ['w'], 'drag')}
-              onDragEnd={(event) => resize(event, ['w'], 'dragend')}
+              onDrag={(event) => resize(event, element, ['w'], 'drag')}
+              onDragEnd={(event) => resize(event, element, ['w'], 'dragend')}
               draggable
             />
             <div
               className='element-border e'
-              onDrag={(event) => resize(event, ['e'], 'drag')}
-              onDragEnd={(event) => resize(event, ['e'], 'dragend')}
+              onDrag={(event) => resize(event, element, ['e'], 'drag')}
+              onDragEnd={(event) => resize(event, element, ['e'], 'dragend')}
               draggable
             />
             <div
               className='element-border s'
-              onDrag={(event) => resize(event, ['s'], 'drag')}
-              onDragEnd={(event) => resize(event, ['s'], 'dragend')}
+              onDrag={(event) => resize(event, element, ['s'], 'drag')}
+              onDragEnd={(event) => resize(event, element, ['s'], 'dragend')}
               draggable
             />
             <div
               className='element-corner sw'
-              onDrag={(event) => resize(event, ['s', 'w'], 'drag')}
-              onDragEnd={(event) => resize(event, ['s', 'w'], 'dragend')}
+              onDrag={(event) => resize(event, element, ['s', 'w'], 'drag')}
+              onDragEnd={(event) => resize(event, element, ['s', 'w'], 'dragend')}
               draggable
             />
             <div
               className='element-corner se'
-              onDrag={(event) => resize(event, ['s', 'e'], 'drag')}
-              onDragEnd={(event) => resize(event, ['s', 'e'], 'dragend')}
+              onDrag={(event) => resize(event, element, ['s', 'e'], 'drag')}
+              onDragEnd={(event) => resize(event, element, ['s', 'e'], 'dragend')}
               draggable
             />
             <div
               className='element-corner nw'
-              onDrag={(event) => resize(event, ['n', 'w'], 'drag')}
-              onDragEnd={(event) => resize(event, ['n', 'w'], 'dragend')}
+              onDrag={(event) => resize(event, element, ['n', 'w'], 'drag')}
+              onDragEnd={(event) => resize(event, element, ['n', 'w'], 'dragend')}
               draggable
             />
             <div
               className='element-corner ne'
-              onDrag={(event) => resize(event, ['n', 'e'], 'drag')}
-              onDragEnd={(event) => resize(event, ['n', 'e'], 'dragend')}
+              onDrag={(event) => resize(event, element, ['n', 'e'], 'drag')}
+              onDragEnd={(event) => resize(event, element, ['n', 'e'], 'dragend')}
               draggable
             />
           </div>
