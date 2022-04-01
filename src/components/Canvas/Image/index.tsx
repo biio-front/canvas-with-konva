@@ -23,6 +23,7 @@ function CanvasImage({ element, onClick }: Props) {
         borderColor: element.styles.borderColor,
       }}
       onClick={(event) => onClick(event)}
+      draggable={false}
     />
   );
 }
