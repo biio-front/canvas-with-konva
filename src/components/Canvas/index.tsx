@@ -5,13 +5,13 @@ import { modifyCanvasItemStyle, selectItem } from '../../reducers/canvas';
 
 import CanvasText from './Text';
 import CanvasShape from './Shape';
+import CanvasImage from './Image';
 
 import { useAppDispatch, useAppSelector } from '../../store';
 
 import { CanvasElement } from '../../type/canvas';
 
 import './index.scss';
-import CanvasImage from './Image';
 
 function Canvas() {
   const dispatch = useAppDispatch();
