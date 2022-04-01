@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import { DragEvent, useState } from 'react';
 import { shallowEqual } from 'react-redux';
 import { modifyCanvasItemStyle, selectItem } from '../../reducers/canvas';
@@ -6,6 +7,8 @@ import CanvasText from './Text';
 import CanvasShape from './Shape';
 
 import { useAppDispatch, useAppSelector } from '../../store';
+
+import { CanvasElement } from '../../type/canvas';
 
 import './index.scss';
 import CanvasImage from './Image';
@@ -24,6 +27,9 @@ function Canvas() {
 
   const [startX, setStartX] = useState<number>(0);
   const [startY, setStartY] = useState<number>(0);
+  const [innerMouseX, setInnerMouseX] = useState<number>(0);
+  const [innerMouseY, setInnerMouseY] = useState<number>(0);
+
   const resize = (
     event: DragEvent,
     element: CanvasElement,
@@ -84,9 +90,47 @@ function Canvas() {
     }
   };
 
+  const onMouseDown = (event: React.MouseEvent, element: CanvasElement) => {
+    const domSelectedItem = document.querySelector(`.canvas-element.${element.id}`);
+    if (!domSelectedItem) {
+      return;
+    }
+
+    const startInnerMouseX = event.clientX - domSelectedItem.getBoundingClientRect().left;
+    const startInnerMouseY = event.clientY - domSelectedItem.getBoundingClientRect().top;
+
+    setInnerMouseX(startInnerMouseX);
+    setInnerMouseY(startInnerMouseY);
+    dispatch(selectItem(element));
+  };
+
+  const onMouseMove = (event: React.MouseEvent) => {
+    const canvas = document.querySelector('#canvas');
+
+    if (!innerMouseX || !canvas) {
+      return;
+    }
+
+    const cardX = canvas.getBoundingClientRect().left;
+    const cardY = canvas.getBoundingClientRect().top;
+
+    const posX = event.clientX - innerMouseX - cardX;
+    const posY = event.clientY - innerMouseY - cardY;
+
+    dispatch(modifyCanvasItemStyle({ posX, posY }));
+  };
 
   return (
-    <div className='canvas' id='canvas' style={{ background: background.color }}>
+    <div
+      className='canvas'
+      id='canvas'
+      style={{ background: background.color }}
+      onMouseMove={onMouseMove}
+      onMouseUp={(event: React.MouseEvent) => {
+        onMouseMove(event);
+        setInnerMouseX(0);
+      }}
+    >
       {canvasElements.map((element) => {
         const isSelected = selectedItem.id === element.id;
 
@@ -96,23 +140,10 @@ function Canvas() {
           dispatch(selectItem(element));
         };
 
-        const onDragEnd = (event: React.DragEvent) => {
-          const prevPosX = element.styles.posX;
-          const prevPosY = element.styles.posY;
-
-          const moveX = event.clientX - startX;
-          const moveY = event.clientY - startY;
-
-          const posX = prevPosX + moveX;
-          const posY = prevPosY + moveY;
-
-          dispatch(modifyCanvasItemStyle({ posX, posY }));
-        };
-
         return (
           <div
             key={element.id}
-            className={`canvas-element ${isSelected ? 'selected' : ''}`}
+            className={`canvas-element ${isSelected ? 'selected' : ''} ${element.id}`}
             style={{
               left: element.styles.posX,
               top: element.styles.posY,
@@ -120,9 +151,7 @@ function Canvas() {
               height: element.styles.height,
               zIndex: element.styles.zIndex,
             }}
-            onDragStart={onClick}
-            onDragEnd={onDragEnd}
-            draggable
+            onMouseDown={(event: React.MouseEvent) => onMouseDown(event, element)}
           >
             {element.type === 'text' && <CanvasText onClick={onClick} element={element} />}
 
