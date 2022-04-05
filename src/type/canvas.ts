@@ -3,7 +3,7 @@ export type Canvas = {
   items: CanvasElement[];
 };
 
-export type ElementType = 'Text' | 'Rect' | 'Circle';
+export type ElementType = 'Text' | 'Rect' | 'Circle' | 'Image';
 export type CanvasElement = {
   className: ElementType | '';
   attrs: ElementStyle;
@@ -35,7 +35,7 @@ export type TextStyle = {
 };
 
 export type ShapeStyle = {
-  color?: string;
+  fill?: string;
   borderWidth?: string;
   borderStyle?: string;
   borderColor?: string;
