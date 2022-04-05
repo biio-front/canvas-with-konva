@@ -7,8 +7,8 @@ export const changeElementStyle = (
 ) => {
   const changedSelectedElement = {
     ...selectedItem,
-    styles: {
-      ...selectedItem.styles,
+    attrs: {
+      ...selectedItem.attrs,
       ...changedValues,
     },
   };
@@ -24,7 +24,10 @@ export const changeElementText = (
 ) => {
   const changedSelectedElement = {
     ...selectedItem,
-    text: changedText,
+    attrs: {
+      ...selectedItem.attrs,
+      text: changedText,
+    },
   };
 
   const changedElements = changeElements(elements, selectedItem, changedSelectedElement);
@@ -50,7 +53,7 @@ export const changeElements = (
   selectedItem: CanvasElement,
   changedSelectedElement: CanvasElement,
 ) => {
-  const selectedIndex = selectedItem.styles.zIndex;
+  const selectedIndex = selectedItem.attrs.zIndex;
   const changedElements = [...elements];
   changedElements.splice(selectedIndex, 1, changedSelectedElement);
 
@@ -68,11 +71,11 @@ export const changeElementOrder = (
 
   const changedSelectedItem = {
     ...selectedItem,
-    styles: { ...selectedItem.styles, zIndex: switchedIndex },
+    attrs: { ...selectedItem.attrs, zIndex: switchedIndex },
   };
   const changedSwitchedItem = {
     ...changedCanvasItems[switchedIndex],
-    styles: { ...changedCanvasItems[switchedIndex].styles, zIndex: selectedIndex },
+    attrs: { ...changedCanvasItems[switchedIndex].attrs, zIndex: selectedIndex },
   };
 
   changedCanvasItems.splice(switchedIndex, 1, changedSelectedItem);
@@ -84,15 +87,15 @@ export const changeElementOrder = (
 export const deleteElement = (canvasItems: CanvasElement[], selectedItemId: string) => {
   const changedCanvasItems = [...canvasItems];
 
-  const selectedIndex = changedCanvasItems.findIndex((item) => item.id === selectedItemId);
-  const selectedZIndex = changedCanvasItems[selectedIndex].styles.zIndex;
+  const selectedIndex = changedCanvasItems.findIndex((item) => item.attrs.id === selectedItemId);
+  const selectedZIndex = changedCanvasItems[selectedIndex].attrs.zIndex;
 
   changedCanvasItems.splice(selectedIndex, 1);
   const deletedCanvasItems = changedCanvasItems.map((item) => {
-    if (item.styles.zIndex < selectedZIndex) {
+    if (item.attrs.zIndex < selectedZIndex) {
       return item;
     } else {
-      return { ...item, styles: { ...item.styles, zIndex: item.styles.zIndex - 1 } };
+      return { ...item, attrs: { ...item.attrs, zIndex: item.attrs.zIndex - 1 } };
     }
   });
 

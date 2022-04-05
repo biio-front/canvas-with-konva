@@ -17,10 +17,8 @@ type State = {
 const initialState = {
   canvas: { background: { color: '#ffffff' }, items: [] },
   selectedItem: {
-    type: '',
     className: '',
-    id: '',
-    styles: { posX: 20, posY: 20, width: 100, height: 30, zIndex: 0 },
+    attrs: { id: '', x: 20, y: 20, zIndex: 0 },
   },
   deletedCount: 0,
 } as State;
@@ -45,13 +43,13 @@ const canvasSlice = createSlice({
       const changedElements = changeElementStyle(state.canvas.items, state.selectedItem, payload);
 
       state.canvas.items = changedElements;
-      state.selectedItem.styles = { ...state.selectedItem.styles, ...payload };
+      state.selectedItem.attrs = { ...state.selectedItem.attrs, ...payload };
     },
     modifyCanvasItemText: (state, { payload }) => {
       const changedElements = changeElementText(state.canvas.items, state.selectedItem, payload);
 
       state.canvas.items = changedElements;
-      state.selectedItem.text = payload;
+      state.selectedItem.attrs.text = payload;
     },
     modifyCanvasItemImage: (state, { payload }) => {
       const changedElements = changeElementImage(state.canvas.items, state.selectedItem, payload);
@@ -73,7 +71,7 @@ const canvasSlice = createSlice({
       state.selectedItem = changedSelectedItem;
     },
     deleteCanvasItem: (state) => {
-      const deletedCanvasItems = deleteElement(state.canvas.items, state.selectedItem.id);
+      const deletedCanvasItems = deleteElement(state.canvas.items, state.selectedItem.attrs.id);
 
       state.canvas.items = deletedCanvasItems;
       state.selectedItem = initialState.selectedItem;

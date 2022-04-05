@@ -5,13 +5,13 @@ import { modifyCanvasItemStyle } from '../../../reducers/canvas';
 
 function CustomizingShape() {
   const dispatch = useAppDispatch();
-  const { className, color, borderWidth, borderColor, borderStyle } = useAppSelector(
+  const { className, fill, borderWidth, borderColor, borderStyle } = useAppSelector(
     (state) => ({
       className: state.canvas.selectedItem.className,
-      color: state.canvas.selectedItem.styles.color,
-      borderWidth: state.canvas.selectedItem.styles.borderWidth,
-      borderStyle: state.canvas.selectedItem.styles.borderStyle,
-      borderColor: state.canvas.selectedItem.styles.borderColor,
+      fill: state.canvas.selectedItem.attrs.fill,
+      borderWidth: state.canvas.selectedItem.attrs.borderWidth,
+      borderStyle: state.canvas.selectedItem.attrs.borderStyle,
+      borderColor: state.canvas.selectedItem.attrs.borderColor,
     }),
     shallowEqual,
   );
@@ -20,8 +20,8 @@ function CustomizingShape() {
     <>
       <div className='customizing-title'>
         <span>
-          {className === 'rectangle' && '사각형'}
-          {className === 'circle' && '원'}
+          {className === 'Rect' && '사각형'}
+          {className === 'Circle' && '원'}
         </span>
       </div>
 
@@ -30,8 +30,8 @@ function CustomizingShape() {
           <div>색상</div>
           <input
             type='color'
-            value={color}
-            onChange={(event) => dispatch(modifyCanvasItemStyle({ color: event.target.value }))}
+            value={fill}
+            onChange={(event) => dispatch(modifyCanvasItemStyle({ fill: event.target.value }))}
           />
         </label>
 

@@ -32,8 +32,7 @@
     "brace-style": [2, "1tbs", { "allowSingleLine": false }],
     // Require following curly brace always
     "curly": ["error", "all"],
-    // Don't use single character naming
-    "id-length": ["error", { "exceptions": ["i", "_"] }],
+    "id-length": "off",
     // No method chaining more than 2
     "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 2 }],
     "no-multiple-empty-lines": ["error", { "max": 1 }],

@@ -62,10 +62,14 @@ function AddingBoard() {
           type='button'
           onClick={() => {
             const element = {
-              type: 'text',
-              className: 'text',
-              id: `text-${newElementIndex}`,
-              styles: { posX: 20, posY: 20, width: 100, height: 30, zIndex: newElementZIndex },
+              className: 'Text',
+              attrs: {
+                id: `text-${newElementIndex}`,
+                x: 20,
+                y: 20,
+                zIndex: newElementZIndex,
+                text: 'example text',
+              },
             };
 
             dispatch(addCanvasItem(element));

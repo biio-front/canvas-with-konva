@@ -3,12 +3,10 @@ export type Canvas = {
   items: CanvasElement[];
 };
 
+export type ElementType = 'Text' | 'Rect' | 'Circle';
 export type CanvasElement = {
-  type: string;
-  className: string;
-  id: string;
-  styles: ElementStyle;
-  text?: string;
+  className: ElementType | '';
+  attrs: ElementStyle;
   image?: { src: string; alt: string };
 };
 
@@ -18,17 +16,19 @@ export type Background = {
 };
 
 export type ElementStyle = {
-  posX: number;
-  posY: number;
-  width: number;
-  height: number;
+  id: string;
   zIndex: number;
+  x: number;
+  y: number;
+  width?: number;
+  height?: number;
 } & TextStyle &
   ShapeStyle;
 
 export type TextStyle = {
-  color?: string;
-  fontSize?: string;
+  text?: string;
+  fill?: string;
+  fontSize?: number;
   fontFamily?: string;
   fontWeight?: string;
   textAlign?: 'left' | 'center' | 'right';

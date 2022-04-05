@@ -5,13 +5,13 @@ import { modifyCanvasItemStyle } from '../../../reducers/canvas';
 
 function CustomizingText() {
   const dispatch = useAppDispatch();
-  const { color, fontSize, fontFamily, fontWeight, textAlign } = useAppSelector(
+  const { fill, fontSize, fontFamily, fontWeight, textAlign } = useAppSelector(
     (state) => ({
-      color: state.canvas.selectedItem.styles.color,
-      fontSize: state.canvas.selectedItem.styles.fontSize,
-      fontFamily: state.canvas.selectedItem.styles.fontFamily,
-      fontWeight: state.canvas.selectedItem.styles.fontWeight,
-      textAlign: state.canvas.selectedItem.styles.textAlign,
+      fill: state.canvas.selectedItem.attrs.fill,
+      fontSize: state.canvas.selectedItem.attrs.fontSize,
+      fontFamily: state.canvas.selectedItem.attrs.fontFamily,
+      fontWeight: state.canvas.selectedItem.attrs.fontWeight,
+      textAlign: state.canvas.selectedItem.attrs.textAlign,
     }),
     shallowEqual,
   );
@@ -28,26 +28,23 @@ function CustomizingText() {
             <div>텍스트 색상</div>
             <input
               type='color'
-              value={color || '000000'}
-              onChange={(event) => dispatch(modifyCanvasItemStyle({ color: event.target.value }))}
+              value={fill || '000000'}
+              onChange={(event) => dispatch(modifyCanvasItemStyle({ fill: event.target.value }))}
             />
           </label>
 
           <div className='content'>
             <label htmlFor='font-size'>
               <div>텍스트 크기</div>
-              <select
-                value={fontSize || '16px'}
+              <input
+                type='range'
+                value={fontSize || 16}
+                min={1}
+                max={200}
                 onChange={(event) =>
-                  dispatch(modifyCanvasItemStyle({ fontSize: event.target.value }))
+                  dispatch(modifyCanvasItemStyle({ fontSize: Number(event.target.value) }))
                 }
-              >
-                <option>10px</option>
-                <option>13px</option>
-                <option>16px</option>
-                <option>19px</option>
-                <option>21px</option>
-              </select>
+              />
             </label>
           </div>
         </div>
