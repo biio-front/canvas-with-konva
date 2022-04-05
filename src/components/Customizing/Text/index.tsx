@@ -36,18 +36,15 @@ function CustomizingText() {
           <div className='content'>
             <label htmlFor='font-size'>
               <div>텍스트 크기</div>
-              <select
-                value={fontSize || '16px'}
+              <input
+                type='range'
+                value={fontSize || 16}
+                min={1}
+                max={200}
                 onChange={(event) =>
-                  dispatch(modifyCanvasItemStyle({ fontSize: event.target.value }))
+                  dispatch(modifyCanvasItemStyle({ fontSize: Number(event.target.value) }))
                 }
-              >
-                <option>10px</option>
-                <option>13px</option>
-                <option>16px</option>
-                <option>19px</option>
-                <option>21px</option>
-              </select>
+              />
             </label>
           </div>
         </div>

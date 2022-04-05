@@ -20,15 +20,15 @@ export type Background = {
 export type ElementStyle = {
   posX: number;
   posY: number;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   zIndex: number;
 } & TextStyle &
   ShapeStyle;
 
 export type TextStyle = {
   color?: string;
-  fontSize?: string;
+  fontSize?: number;
   fontFamily?: string;
   fontWeight?: string;
   textAlign?: 'left' | 'center' | 'right';

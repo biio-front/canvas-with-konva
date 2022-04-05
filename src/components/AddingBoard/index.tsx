@@ -65,7 +65,7 @@ function AddingBoard() {
               type: 'text',
               className: 'text',
               id: `text-${newElementIndex}`,
-              styles: { posX: 20, posY: 20, width: 100, height: 30, zIndex: newElementZIndex },
+              styles: { posX: 20, posY: 20, zIndex: newElementZIndex },
             };
 
             dispatch(addCanvasItem(element));

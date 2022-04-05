@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { shallowEqual } from 'react-redux';
 
 import Customizing from '../components/Customizing';
@@ -12,12 +13,8 @@ import Layer from '../components/Layer';
 import '../styles/Playground.scss';
 
 function Playground() {
-    (state) => ({
-      selectedItemType: state.canvas.selectedItem.type,
-    }),
-    shallowEqual,
-  );
 
+  const stageRef = useRef(null);
   const onSave = () => {
   };
 
@@ -32,7 +29,7 @@ function Playground() {
 
       <div className='container adding'>
         <AddingBoard />
-        <Canvas />
+        <Canvas stageRef={stageRef} />
       </div>
 
       <div className='container'>
