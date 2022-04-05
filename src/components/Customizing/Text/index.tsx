@@ -5,13 +5,13 @@ import { modifyCanvasItemStyle } from '../../../reducers/canvas';
 
 function CustomizingText() {
   const dispatch = useAppDispatch();
-  const { color, fontSize, fontFamily, fontWeight, textAlign } = useAppSelector(
+  const { fill, fontSize, fontFamily, fontWeight, textAlign } = useAppSelector(
     (state) => ({
-      color: state.canvas.selectedItem.styles.color,
-      fontSize: state.canvas.selectedItem.styles.fontSize,
-      fontFamily: state.canvas.selectedItem.styles.fontFamily,
-      fontWeight: state.canvas.selectedItem.styles.fontWeight,
-      textAlign: state.canvas.selectedItem.styles.textAlign,
+      fill: state.canvas.selectedItem.attrs.fill,
+      fontSize: state.canvas.selectedItem.attrs.fontSize,
+      fontFamily: state.canvas.selectedItem.attrs.fontFamily,
+      fontWeight: state.canvas.selectedItem.attrs.fontWeight,
+      textAlign: state.canvas.selectedItem.attrs.textAlign,
     }),
     shallowEqual,
   );
@@ -28,8 +28,8 @@ function CustomizingText() {
             <div>텍스트 색상</div>
             <input
               type='color'
-              value={color || '000000'}
-              onChange={(event) => dispatch(modifyCanvasItemStyle({ color: event.target.value }))}
+              value={fill || '000000'}
+              onChange={(event) => dispatch(modifyCanvasItemStyle({ fill: event.target.value }))}
             />
           </label>
 

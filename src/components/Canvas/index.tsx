@@ -28,18 +28,17 @@ function Canvas({ stageRef }: Props) {
             dispatch(selectItem(element));
           };
 
-          if (element.type === 'text') {
+          if (element.className === 'Text') {
             return (
               <Text
-                key={element.id}
-                id={element.id}
-                text='canvas'
-                x={element.styles.posX}
-                y={element.styles.posY}
-                width={100}
-                fill={element.styles.color}
-                fontSize={element.styles.fontSize}
-                fontFamily={element.styles.fontFamily}
+                key={element.attrs.id}
+                id={element.attrs.id}
+                text={element.attrs.text}
+                x={element.attrs.x}
+                y={element.attrs.y}
+                fill={element.attrs.fill}
+                fontSize={element.attrs.fontSize}
+                fontFamily={element.attrs.fontFamily}
                 draggable
                 onClick={onClick}
                 onDragStart={onClick}
@@ -47,7 +46,7 @@ function Canvas({ stageRef }: Props) {
             );
           }
 
-          return <div key={element.id} />;
+          return <div key={element.attrs.id} />;
         })}
       </Layer>
     </Stage>

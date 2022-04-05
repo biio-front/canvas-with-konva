@@ -15,7 +15,7 @@ function Layer() {
     shallowEqual,
   );
   const canvasItems = [...canvas.items].reverse();
-  const selectedZIndex = selectedItem.styles.zIndex;
+  const selectedZIndex = selectedItem.attrs.zIndex;
 
   return (
     <div className='layer'>
@@ -47,12 +47,12 @@ function Layer() {
 
       <ul className='layer-items'>
         {canvasItems.map((item) => {
-          const isSelected = item.id === selectedItem.id;
+          const isSelected = item.attrs.id === selectedItem.attrs.id;
 
           return (
             <li
               className={`layer-item ${isSelected ? 'selected' : ''}`}
-              key={item.id}
+              key={item.attrs.id}
               onClick={() => dispatch(selectItem(item))}
               onDragStart={() => {
                 dispatch(selectItem(item));
@@ -60,14 +60,13 @@ function Layer() {
               draggable
             >
               <div className='item'>
-                <span className='material-icons' style={{ color: item.styles.color || '#444444' }}>
-                  {(item.className === 'text' && 'text_fields') ||
-                    (item.className === 'rectangle' && 'rectangle') ||
-                    (item.className === 'circle' && 'lens') ||
-                    (item.className === 'image' && 'image')}
+                <span className='material-icons' style={{ fill: item.attrs.fill || '#444444' }}>
+                  {(item.className === 'Text' && 'text_fields') ||
+                    (item.className === 'Rect' && 'rectangle') ||
+                    (item.className === 'Circle' && 'lens')}
                 </span>
 
-                {item.id}
+                {item.attrs.id}
               </div>
 
               <button

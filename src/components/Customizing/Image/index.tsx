@@ -11,9 +11,9 @@ function CustomizingImage() {
   const { src, borderWidth, borderColor, borderStyle } = useAppSelector(
     (state) => ({
       src: state.canvas.selectedItem.image?.src || '',
-      borderWidth: state.canvas.selectedItem.styles.borderWidth,
-      borderColor: state.canvas.selectedItem.styles.borderColor,
-      borderStyle: state.canvas.selectedItem.styles.borderStyle,
+      borderWidth: state.canvas.selectedItem.attrs.borderWidth,
+      borderColor: state.canvas.selectedItem.attrs.borderColor,
+      borderStyle: state.canvas.selectedItem.attrs.borderStyle,
     }),
     shallowEqual,
   );
