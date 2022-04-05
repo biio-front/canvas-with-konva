@@ -154,12 +154,11 @@ function AddingBoard() {
                 reader.readAsDataURL(changedFile);
                 reader.onload = (readEvent: any) => {
                   const element = {
-                    type: 'image',
-                    className: 'image',
-                    id: `image-${newElementIndex}`,
-                    styles: {
-                      posX: 20,
-                      posY: 20,
+                    className: 'Image',
+                    attrs: {
+                      id: `image-${newElementIndex}`,
+                      x: 20,
+                      y: 20,
                       width: 200,
                       height: 200,
                       zIndex: newElementZIndex,

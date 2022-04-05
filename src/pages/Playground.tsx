@@ -22,9 +22,9 @@ function Playground() {
     <div className='playground'>
       <div className='container'>
         {selectedItemType === '' && <Customizing />}
-        {selectedItemType === 'text' && <CustomizingText />}
-        {selectedItemType === 'shape' && <CustomizingShape />}
-        {selectedItemType === 'image' && <CustomizingImage />}
+        {selectedItemType === 'Text' && <CustomizingText />}
+        {selectedItemType === 'Image' && <CustomizingImage />}
+        {(selectedItemType === 'Rect' || selectedItemType === 'Circle') && <CustomizingShape />}
       </div>
 
       <div className='container adding'>
