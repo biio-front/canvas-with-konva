@@ -159,8 +159,6 @@ function AddingBoard() {
                       id: `image-${newElementIndex}`,
                       x: 20,
                       y: 20,
-                      width: 200,
-                      height: 200,
                       zIndex: newElementZIndex,
                       borderWidth: '0',
                       borderStyle: 'solid',

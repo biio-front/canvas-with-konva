@@ -1,17 +1,20 @@
 import { shallowEqual } from 'react-redux';
-import { Layer, Stage, Text } from 'react-konva';
+import { Layer, Stage } from 'react-konva';
+
+import TextCanvas from './Text/TextCanvas';
+import ImageCanvas from './Image';
 
 import { useAppDispatch, useAppSelector } from '../../store';
+import { modifyCanvasItemStyle, selectItem } from '../../reducers/canvas';
 
 import './index.scss';
-import { selectItem } from '../../reducers/canvas';
 
 type Props = { stageRef: React.MutableRefObject<any> };
 
 function Canvas({ stageRef }: Props) {
   const dispatch = useAppDispatch();
 
-  const { canvasElements } = useAppSelector(
+  const { canvasElements, selectedItem } = useAppSelector(
     (state) => ({
       background: state.canvas.canvas.background,
       canvasElements: state.canvas.canvas.items,
@@ -24,24 +27,32 @@ function Canvas({ stageRef }: Props) {
     <Stage width={300} height={500} className='canvas' ref={stageRef}>
       <Layer>
         {canvasElements.map((element) => {
-          const onClick = () => {
-            dispatch(selectItem(element));
-          };
+          const isSelected = element.attrs.id === selectedItem.attrs.id;
+
+          const onSelect = () => dispatch(selectItem(element));
+          const onChange = (attrs: { [key: string]: string }) =>
+            dispatch(modifyCanvasItemStyle(attrs));
 
           if (element.className === 'Text') {
             return (
-              <Text
+              <TextCanvas
                 key={element.attrs.id}
-                id={element.attrs.id}
-                text={element.attrs.text}
-                x={element.attrs.x}
-                y={element.attrs.y}
-                fill={element.attrs.fill}
-                fontSize={element.attrs.fontSize}
-                fontFamily={element.attrs.fontFamily}
-                draggable
-                onClick={onClick}
-                onDragStart={onClick}
+                isSelected={isSelected}
+                element={element}
+                onSelect={onSelect}
+                onChange={onChange}
+              />
+            );
+          }
+
+          if (element.className === 'Image') {
+            return (
+              <ImageCanvas
+                key={element.attrs.id}
+                isSelected={isSelected}
+                element={element}
+                onSelect={onSelect}
+                onChange={onChange}
               />
             );
           }

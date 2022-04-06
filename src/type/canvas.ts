@@ -22,6 +22,10 @@ export type ElementStyle = {
   y: number;
   width?: number;
   height?: number;
+  scaleX?: number;
+  scaleY?: number;
+  rotation?: number;
+  skewX?: number;
 } & TextStyle &
   ShapeStyle;
 
